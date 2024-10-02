@@ -5,13 +5,9 @@ plugins {
 
 android {
     namespace = "com.maritogram.fuelt.core.designsystem"
-    compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
 }
 

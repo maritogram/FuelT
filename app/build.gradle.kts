@@ -27,10 +27,6 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
 
     packaging {
         resources {
@@ -40,11 +36,17 @@ android {
 }
 
 dependencies {
+    // Feature dependencies
+    implementation(projects.feature.trainer)
 
+    // Core dependencies
+    implementation(projects.core.designsystem)
 
-
+    // External libraries dependencies
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.navigation.compose)
 
 }

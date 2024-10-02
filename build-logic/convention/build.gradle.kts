@@ -65,6 +65,10 @@ gradlePlugin{
             id = "fuelt.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+        register("androidFeature") {
+            id = "fuelt.android.feature"
+            implementationClass = "AndroidFeatureConventionPlugin"
+        }
 
 
     }
