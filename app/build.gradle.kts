@@ -38,6 +38,7 @@ android {
 dependencies {
     // Feature dependencies
     implementation(projects.feature.trainer)
+    implementation(projects.feature.routines)
 
     // Core dependencies
     implementation(projects.core.designsystem)
@@ -48,5 +49,4 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.navigation.compose)
-
 }

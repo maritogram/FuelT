@@ -1,12 +1,15 @@
 package com.maritogram.fuelt.ui
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.maritogram.fuelt.core.designsystem.component.FueltNavigationBar
 import com.maritogram.fuelt.core.designsystem.component.FueltNavigationBarItem
 import com.maritogram.fuelt.navigation.FueltNavHost
@@ -25,15 +28,9 @@ fun FueltApp(
                         icon = {
                             Icon(Icons.Filled.Home, contentDescription = "idfk")
                         },
-                        onClick = { println("Hey")}
-
-
+                        onClick = { appState.navigateToTopLevelDestination(destination) }
 
                     )
-
-
-
-
 
                 }
             }
@@ -42,7 +39,12 @@ fun FueltApp(
         }
     )
     {
-
-        FueltNavHost(appState)
+        padding->
+        Column (
+            Modifier.padding(padding)
+        )
+        {
+            FueltNavHost(appState)
+        }
     }
 }

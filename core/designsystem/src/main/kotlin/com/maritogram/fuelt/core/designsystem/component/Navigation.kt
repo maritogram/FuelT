@@ -55,7 +55,6 @@ fun FueltNavigationBar(
 fun FueltNavigationBarPreview(){
 
     var selectedItem by remember { mutableIntStateOf(0) }
-
     // Test items
     val items = listOf("Trainer", "Workouts", "NotSure")
 

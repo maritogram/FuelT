@@ -12,27 +12,15 @@ import com.maritogram.fuelt.ui.rememberFueltAppState
 
 class MainActivity : ComponentActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-
-
         setContent {
-
             val appState = rememberFueltAppState()
-
             FueltApp(appState)
         }
     }
 }
 
-
-
-
-@Composable
-fun BottomBar(){
-
-}
 

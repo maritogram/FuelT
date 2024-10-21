@@ -58,6 +58,9 @@ truth = "1.4.2"
 turbine = "1.1.0"
 foundationLayoutAndroid = "1.7.2"
 material3Android = "1.3.0"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+material = "1.12.0"
 
 [bundles]
 androidx-compose-ui-test = ["androidx-compose-ui-test", "androidx-compose-ui-testManifest"]
@@ -161,6 +164,9 @@ ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devto
 room-gradlePlugin = { group = "androidx.room", name = "room-gradle-plugin", version.ref = "room" }
 androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
 androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -197,3 +203,4 @@ fuelt-android-room = { id = "fuelt.android.room" }
 fuelt-android-test = { id = "fuelt.android.test" }
 fuelt-hilt = { id = "fuelt.hilt" }
 fuelt-jvm-library = { id = "fuelt.jvm.library" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
