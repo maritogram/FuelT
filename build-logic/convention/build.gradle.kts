@@ -75,6 +75,11 @@ gradlePlugin{
             implementationClass = "AndroidRoomConventionPlugin"
         }
 
+        register("hilt") {
+            id = "fuelt.hilt"
+            implementationClass = "HiltConventionPlugin"
+        }
+
 
     }
 
