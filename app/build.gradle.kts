@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.fuelt.android.application.compose)
     alias(libs.plugins.fuelt.android.application)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.fuelt.hilt)
 }
 
 android {
@@ -43,10 +44,16 @@ dependencies {
     // Core dependencies
     implementation(projects.core.designsystem)
 
+
+    ksp(libs.hilt.compiler)
+
+
     // External libraries dependencies
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
+
 }
