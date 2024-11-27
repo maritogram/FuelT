@@ -17,6 +17,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
+            // Creating our app state
             val appState = rememberFueltAppState()
             FueltApp(appState)
         }

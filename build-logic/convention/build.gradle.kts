@@ -70,6 +70,11 @@ gradlePlugin{
             implementationClass = "AndroidFeatureConventionPlugin"
         }
 
+        register("androidRoom") {
+            id = "fuelt.android.room"
+            implementationClass = "AndroidRoomConventionPlugin"
+        }
+
 
     }
 

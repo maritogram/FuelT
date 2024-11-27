@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.maritogram.fuelt.feature.routines.navigation.routinesScreen
-import com.maritogram.fuelt.feature.trainer.navigation.TrainerRoute
-import com.maritogram.fuelt.feature.trainer.navigation.trainerScreen
+import com.maritogram.fuelt.feature.home.navigation.HomeRoute
+import com.maritogram.fuelt.feature.home.navigation.trainerScreen
 import com.maritogram.fuelt.ui.FueltAppState
 
 @Composable
@@ -17,7 +17,7 @@ fun FueltNavHost(
     val navController = appState.navController
     NavHost(
         navController = navController,
-        startDestination = TrainerRoute,
+        startDestination = HomeRoute,
         modifier = modifier
     ){
         trainerScreen()

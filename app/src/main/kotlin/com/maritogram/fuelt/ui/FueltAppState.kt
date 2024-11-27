@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.maritogram.fuelt.feature.routines.navigation.navigateToRoutines
-import com.maritogram.fuelt.feature.trainer.navigation.navigateToTrainer
+import com.maritogram.fuelt.feature.home.navigation.navigateToHome
 import com.maritogram.fuelt.navigation.AppDestinations
 import com.maritogram.fuelt.navigation.AppDestinations.ROUTINES
 import com.maritogram.fuelt.navigation.AppDestinations.TRAINER
@@ -51,7 +51,7 @@ class FueltAppState(
         }
 
         when (appDestinations) {
-            TRAINER -> navController.navigateToTrainer(topLevelNavOptions)
+            TRAINER -> navController.navigateToHome(topLevelNavOptions)
             ROUTINES -> navController.navigateToRoutines(topLevelNavOptions)
         }
     }

@@ -26,5 +26,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 // Adding subprojects.
 include(":app")
 include(":core:designsystem")
-include(":feature:trainer")
+include(":feature:home")
 include(":feature:routines")
+include(":core:ui")
+include(":core:database")

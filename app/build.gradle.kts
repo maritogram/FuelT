@@ -37,7 +37,7 @@ android {
 
 dependencies {
     // Feature dependencies
-    implementation(projects.feature.trainer)
+    implementation(projects.feature.home)
     implementation(projects.feature.routines)
 
     // Core dependencies
