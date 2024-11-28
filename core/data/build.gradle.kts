@@ -1,20 +1,18 @@
 plugins {
     alias(libs.plugins.fuelt.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.fuelt.android.room)
     alias(libs.plugins.fuelt.hilt)
+    id("kotlinx-serialization")
 }
 
 android {
-    namespace = "com.maritogram.fuelt.core.database"
-
+    namespace = "com.maritogram.fuelt.core.data"
 }
 
 dependencies {
-    api(projects.core.model)
+    api(projects.core.database)
+//    api(projects.core.datastore)
 
 
-    implementation(libs.kotlinx.datetime)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

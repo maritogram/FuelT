@@ -80,6 +80,10 @@ gradlePlugin{
             implementationClass = "HiltConventionPlugin"
         }
 
+        register("jvmLibrary") {
+            id = "fuelt.jvm.library"
+            implementationClass = "JvmLibraryConventionPlugin"
+        }
 
     }
 

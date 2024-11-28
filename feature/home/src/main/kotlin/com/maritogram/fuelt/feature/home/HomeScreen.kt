@@ -15,10 +15,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toList
+
+// TODO: Create root composable
 
 
 @Composable
-internal fun HomeScreen(modifier: Modifier = Modifier){
+internal fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
+    modifier: Modifier = Modifier){
     Column(
         modifier = modifier
             .padding(31.dp)
@@ -27,8 +34,8 @@ internal fun HomeScreen(modifier: Modifier = Modifier){
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start,
     ){
-        Text("test")
 
+        Text(viewModel.getWorkouts().toString())
 
         Spacer(modifier= Modifier.height(20.dp))
 
