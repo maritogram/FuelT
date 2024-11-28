@@ -16,5 +16,7 @@ class HomeViewModel @Inject constructor(
 
     fun getWorkouts() : List<Workout> = WorkoutRepository.getWorkouts()
 
+    fun insertWorkout() : Unit = WorkoutRepository.insertWorkout()
+
 
 }

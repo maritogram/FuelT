@@ -10,4 +10,6 @@ interface IWorkoutRepository {
     // Get workouts done during the specified week
     fun getWorkouts(date: String) : Flow<List<Workout>>
 
+    fun insertWorkout() : Unit
+
 }

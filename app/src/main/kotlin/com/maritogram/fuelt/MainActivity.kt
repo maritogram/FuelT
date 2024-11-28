@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 
 import androidx.compose.runtime.Composable
+import com.maritogram.fuelt.core.designsystem.theme.FueltTheme
 import com.maritogram.fuelt.ui.FueltApp
 import com.maritogram.fuelt.ui.rememberFueltAppState
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +21,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             // Creating our app state
             val appState = rememberFueltAppState()
-            FueltApp(appState)
+            FueltTheme(
+                darkTheme = true
+            ){
+                FueltApp(appState)
+            }
         }
     }
 }

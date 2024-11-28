@@ -8,11 +8,15 @@ import javax.inject.Inject
 
 
 // Repository with no database. For demo purposes
-class NoDBWorkoutRepository @Inject constructor (): IWorkoutRepository {
-    override fun getWorkouts(): List<Workout> =
+class NoDBWorkoutRepository @Inject constructor(): IWorkoutRepository {
+    private val workouts = arrayListOf(Workout("test1", "date1"), Workout("test2", "date2"))
 
-                listOf(Workout("test1", "date1"), Workout("test2", "date2"))
 
+    override fun getWorkouts(): List<Workout> = workouts
+
+    override fun insertWorkout() {
+        workouts.add(Workout("test3", "date3"))
+    }
 
 
     override fun getWorkouts(date: String): Flow<List<Workout>> {
