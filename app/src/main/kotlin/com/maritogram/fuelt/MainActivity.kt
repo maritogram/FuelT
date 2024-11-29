@@ -17,7 +17,12 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.auto(
+                android.graphics.Color.TRANSPARENT,
+                android.graphics.Color.TRANSPARENT
+            )
+        )
 
         setContent {
 
@@ -25,7 +30,7 @@ class MainActivity : ComponentActivity() {
             val appState = rememberFueltAppState()
             FueltTheme(
                 darkTheme = true
-            ){
+            ) {
                 FueltApp(appState)
             }
         }

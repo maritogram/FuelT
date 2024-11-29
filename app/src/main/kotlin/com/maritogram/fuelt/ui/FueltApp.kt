@@ -1,6 +1,7 @@
 package com.maritogram.fuelt.ui
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
@@ -31,7 +32,7 @@ fun FueltApp(
     appState: FueltAppState
 ) {
     Scaffold(
-//        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        //contentWindowInsets = WindowInsets(0, 0, 0, 0),
         bottomBar = {
             FueltNavigationBar {
                 appState.topLevelDestinations.forEach { destination ->
@@ -59,6 +60,7 @@ fun FueltApp(
 
 
         ) {
+
             FueltNavHost(appState)
 
 
