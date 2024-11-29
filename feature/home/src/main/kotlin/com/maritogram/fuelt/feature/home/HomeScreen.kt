@@ -1,26 +1,26 @@
 package com.maritogram.fuelt.feature.home
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.maritogram.fuelt.ui.NoCompletedWorkouts
 import com.maritogram.fuelt.ui.WeeklyActivity
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.toList
 
 // TODO: Create root composable
 
@@ -30,37 +30,60 @@ internal fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .padding(31.dp)
-            .fillMaxSize()
-            .testTag("bookmarks:empty"),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start,
-    ) {
+    Scaffold(
+        floatingActionButton = { FloatingActionButton(onClick = {}) { } }
+    )
+    { _ ->
 
-        Text("Hey", textAlign = TextAlign.Start)
+        Column(
+            modifier = modifier
+                .padding(horizontal = 31.dp)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.Start,
+        ) {
 
-        Spacer(modifier = Modifier.height(20.dp))
+            Text("Hey", textAlign = TextAlign.Start)
 
-        Text(
-            "Welcome back, \nMario",
-            style = MaterialTheme.typography.headlineMedium
-        )
+            Spacer(modifier = Modifier.height(20.dp))
 
-        Spacer(modifier = Modifier.height(13.dp))
+            Text(
+                "Welcome back, \nMario",
+                style = MaterialTheme.typography.headlineMedium
+            )
 
-        WeeklyActivity()
+            Spacer(modifier = Modifier.height(13.dp))
 
-        Spacer(modifier = Modifier.height(13.dp))
+            WeeklyActivity()
 
-        Text(
-            "Today's completed workouts",
-            style = MaterialTheme.typography.titleMedium
-        )
+            Spacer(modifier = Modifier.height(18.dp))
 
+            Text(
+                "Today's completed workouts",
+                style = MaterialTheme.typography.titleMedium
+            )
 
+            NoCompletedWorkouts()
+
+            Spacer(modifier = Modifier.height(18.dp))
+
+            Text(
+                "Food suggestions",
+                style = MaterialTheme.typography.titleMedium
+            )
+
+            repeat(50) {
+                Text(it.toString())
+            }
+
+        }
     }
 
+
+}
+
+@Composable
+fun Icon(add: Any, s: String) {
 
 }

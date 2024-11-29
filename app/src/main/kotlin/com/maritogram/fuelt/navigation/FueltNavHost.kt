@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.maritogram.fuelt.feature.routines.navigation.routinesScreen
 import com.maritogram.fuelt.feature.home.navigation.HomeRoute
-import com.maritogram.fuelt.feature.home.navigation.trainerScreen
+import com.maritogram.fuelt.feature.home.navigation.homeScreen
 import com.maritogram.fuelt.ui.FueltAppState
 
 @Composable
@@ -24,7 +24,8 @@ fun FueltNavHost(
         enterTransition = { EnterTransition.None },
         exitTransition =  { ExitTransition.None }
     ) {
-        trainerScreen()
+        // This is building the navgraph, not setting content as ohter composables.
+        homeScreen()
         routinesScreen()
     }
 

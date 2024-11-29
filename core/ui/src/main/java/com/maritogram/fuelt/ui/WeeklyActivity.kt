@@ -67,7 +67,7 @@ fun WeeklyActivity() {
                 // Achieved column
                 Column(
                     modifier = Modifier
-                        .padding(start = 16.dp, bottom = 10.dp)
+                        .padding(start = 16.dp, bottom = 5.dp)
                         .fillMaxHeight(),
                     verticalArrangement = Arrangement.Bottom
                 ) {

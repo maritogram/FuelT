@@ -2,6 +2,7 @@ package com.maritogram.fuelt
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 
@@ -19,6 +20,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
+
             // Creating our app state
             val appState = rememberFueltAppState()
             FueltTheme(

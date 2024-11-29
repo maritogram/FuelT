@@ -13,8 +13,7 @@ import kotlinx.serialization.Serializable
 fun NavController.navigateToHome(navOptions: NavOptions) =
     navigate(route = HomeRoute, navOptions)
 
-fun NavGraphBuilder.trainerScreen(
-
+fun NavGraphBuilder.homeScreen(
 ){
     composable<HomeRoute> {
         HomeScreen()

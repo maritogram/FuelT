@@ -8,12 +8,15 @@ import kotlin.reflect.KClass
 
 enum class AppDestinations(
     val route: KClass<*>,
+    val fab: Boolean
 ) {
-    TRAINER(
-        route = HomeRoute::class
+    HOME(
+        route = HomeRoute::class,
+        fab = true
     ),
     ROUTINES(
-        route = RoutinesRoute::class
+        route = RoutinesRoute::class,
+        fab = false,
     )
 
 

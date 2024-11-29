@@ -10,7 +10,7 @@ import com.maritogram.fuelt.feature.routines.navigation.navigateToRoutines
 import com.maritogram.fuelt.feature.home.navigation.navigateToHome
 import com.maritogram.fuelt.navigation.AppDestinations
 import com.maritogram.fuelt.navigation.AppDestinations.ROUTINES
-import com.maritogram.fuelt.navigation.AppDestinations.TRAINER
+import com.maritogram.fuelt.navigation.AppDestinations.HOME
 
 
 @Composable
@@ -32,7 +32,6 @@ fun rememberFueltAppState(
 class FueltAppState(
     val navController: NavHostController
 ){
-
     val topLevelDestinations: List<AppDestinations> = AppDestinations.entries
 
     fun navigateToTopLevelDestination(appDestinations: AppDestinations) {
@@ -51,7 +50,7 @@ class FueltAppState(
         }
 
         when (appDestinations) {
-            TRAINER -> navController.navigateToHome(topLevelNavOptions)
+            HOME -> navController.navigateToHome(topLevelNavOptions)
             ROUTINES -> navController.navigateToRoutines(topLevelNavOptions)
         }
     }
