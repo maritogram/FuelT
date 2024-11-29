@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.maritogram.fuelt.ui.WeeklyActivity
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 
@@ -27,7 +28,8 @@ import kotlinx.coroutines.flow.toList
 @Composable
 internal fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier){
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier
             .padding(31.dp)
@@ -35,24 +37,30 @@ internal fun HomeScreen(
             .testTag("bookmarks:empty"),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start,
-    ){
+    ) {
 
         Text("Hey", textAlign = TextAlign.Start)
 
+        Spacer(modifier = Modifier.height(20.dp))
 
-        Spacer(modifier= Modifier.height(20.dp))
+        Text(
+            "Welcome back, \nMario",
+            style = MaterialTheme.typography.headlineMedium
+        )
 
-        Text("Welcome back, \nMario",
-            style = MaterialTheme.typography.headlineMedium)
+        Spacer(modifier = Modifier.height(13.dp))
 
-        Spacer(modifier= Modifier.height(13.dp))
+        WeeklyActivity()
 
-        Text("Weeks box" )
+        Spacer(modifier = Modifier.height(13.dp))
 
+        Text(
+            "Today's completed workouts",
+            style = MaterialTheme.typography.titleMedium
+        )
 
 
     }
-
 
 
 }
