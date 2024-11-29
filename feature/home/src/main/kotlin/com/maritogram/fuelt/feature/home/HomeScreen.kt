@@ -84,6 +84,6 @@ internal fun HomeScreen(
 }
 
 @Composable
-fun Icon(add: Any, s: String) {
+fun HomeFAB(onClick: () -> Unit = {}) {
 
 }

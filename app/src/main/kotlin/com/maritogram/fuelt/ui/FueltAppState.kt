@@ -2,8 +2,10 @@ package com.maritogram.fuelt.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.maritogram.fuelt.feature.routines.navigation.navigateToRoutines
@@ -32,6 +34,12 @@ fun rememberFueltAppState(
 class FueltAppState(
     val navController: NavHostController
 ){
+
+    // We get the destination as a state to trigger recomposes
+    val currentDestination: NavDestination?
+        @Composable get() = navController
+            .currentBackStackEntryAsState().value?.destination
+
     val topLevelDestinations: List<AppDestinations> = AppDestinations.entries
 
     fun navigateToTopLevelDestination(appDestinations: AppDestinations) {
