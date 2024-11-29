@@ -68,10 +68,7 @@ fun FueltApp(
 
 
         ) {
-
             FueltNavHost(appState)
-
-
         }
     }
 }
