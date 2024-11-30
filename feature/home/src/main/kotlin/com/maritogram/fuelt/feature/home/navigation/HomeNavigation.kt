@@ -10,13 +10,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable object HomeRoute
 
-fun NavController.navigateToHome(navOptions: NavOptions) =
+fun NavController.navigateToHome(navOptions: NavOptions? = null) =
     navigate(route = HomeRoute, navOptions)
 
 fun NavGraphBuilder.homeScreen(
+    onFabClick: () -> Unit
 ){
     composable<HomeRoute> {
-        HomeScreen()
+        HomeScreen(onFabClick)
     }
 }
 

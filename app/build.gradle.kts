@@ -40,6 +40,7 @@ dependencies {
     // Feature dependencies
     implementation(projects.feature.home)
     implementation(projects.feature.routines)
+    implementation(projects.feature.workoutgeneration)
 
     // Core dependencies
     implementation(projects.core.designsystem)

@@ -33,6 +33,7 @@
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/home" />
             <option value="$PROJECT_DIR$/feature/routines" />
+            <option value="$PROJECT_DIR$/feature/workoutgeneration" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

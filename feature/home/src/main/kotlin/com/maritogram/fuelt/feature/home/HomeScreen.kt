@@ -1,5 +1,12 @@
 package com.maritogram.fuelt.feature.home
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,8 +24,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -32,11 +42,14 @@ import com.maritogram.fuelt.ui.WeeklyActivity
 
 @Composable
 internal fun HomeScreen(
+    onFabClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     Scaffold(
-        floatingActionButton = { HomeFAB(onClick = {}) { } }
+        floatingActionButton = {
+            HomeFAB(onClick = onFabClick)
+        }
     )
     { _ ->
 
@@ -89,7 +102,7 @@ internal fun HomeScreen(
 }
 
 @Composable
-fun HomeFAB(onClick: () -> Unit = {}, content: @Composable () -> Unit) {
+fun HomeFAB(onClick: () -> Unit = {}) {
 
     LargeFloatingActionButton(onClick = onClick) {
         Icon(
@@ -98,5 +111,6 @@ fun HomeFAB(onClick: () -> Unit = {}, content: @Composable () -> Unit) {
             contentDescription = "Dumbbell"
         )
     }
+
 
 }

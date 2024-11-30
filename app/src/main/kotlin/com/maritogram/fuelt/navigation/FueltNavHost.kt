@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import com.maritogram.fuelt.feature.routines.navigation.routinesScreen
 import com.maritogram.fuelt.feature.home.navigation.HomeRoute
 import com.maritogram.fuelt.feature.home.navigation.homeScreen
+import com.maritogram.fuelt.feature.workoutgeneration.navigation.navigateToWorkoutGeneration
+import com.maritogram.fuelt.feature.workoutgeneration.navigation.workoutGenerationScreen
 import com.maritogram.fuelt.ui.FueltAppState
 
 @Composable
@@ -25,8 +27,11 @@ fun FueltNavHost(
         exitTransition =  { ExitTransition.None }
     ) {
         // This is building the navgraph, not setting content as ohter composables.
-        homeScreen()
+        homeScreen(
+            onFabClick = navController::navigateToWorkoutGeneration
+        )
         routinesScreen()
+        workoutGenerationScreen()
     }
 
 }
