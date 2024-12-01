@@ -38,28 +38,16 @@ fun FueltApp(
 ) {
 
 
-    Scaffold(
-
-    ) { paddingValues ->
         Column(
             Modifier
                 .fillMaxSize()
-                .padding(
-                    top = paddingValues.calculateTopPadding(),
-                    bottom = paddingValues.calculateBottomPadding()
-                )
-                .consumeWindowInsets(paddingValues)
-                .windowInsetsPadding(
-                    WindowInsets.safeDrawing.only(
-                        WindowInsetsSides.Horizontal,
-                    )
-                )
+
 
 
         ) {
             FueltNavHost(appState)
         }
-    }
+
 }
 
 
