@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 @Serializable object RoutinesRoute
 
 
-fun NavController.navigateToRoutines(navOptions: NavOptions)
+fun NavController.navigateToRoutines(navOptions: NavOptions? = null)
     = navigate(route = RoutinesRoute, navOptions = navOptions )
 
 fun NavGraphBuilder.routinesScreen(){

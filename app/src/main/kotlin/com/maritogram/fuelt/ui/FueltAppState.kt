@@ -2,6 +2,7 @@ package com.maritogram.fuelt.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -20,7 +21,7 @@ import com.maritogram.fuelt.navigation.AppDestinations.HOME
 fun rememberFueltAppState(
     // Where I create my navigation controller.
     navController: NavHostController = rememberNavController()
-):FueltAppState{
+): FueltAppState {
     return remember(
         //TODO: Fill out later
     ) {
@@ -34,28 +35,34 @@ fun rememberFueltAppState(
 
 class FueltAppState(
     val navController: NavHostController
-){
+) {
 
     val topLevelDestinations: List<AppDestinations> = AppDestinations.entries
 
     // We get the destination as a state to trigger recomposes
-    val currentDestination: NavDestination?
-        @Composable get() = navController
+    @Composable
+    fun currentDestination(navCont: NavController = navController): NavDestination? {
+       return navCont
             .currentBackStackEntryAsState().value?.destination
+    }
+
 
     val inTopLevelDestination: Boolean
         @Composable get() {
             return AppDestinations.entries.any { topLevelDestination ->
-                currentDestination?.hasRoute(route = topLevelDestination.route) ?: true
+                currentDestination()?.hasRoute(route = topLevelDestination.route) ?: true
             }
         }
 
-    fun navigateToTopLevelDestination(appDestinations: AppDestinations) {
+    fun navigateToTopLevelDestination(
+        appDestinations: AppDestinations,
+        navCont: NavController = navController
+    ) {
         val topLevelNavOptions = navOptions {
             // Pop up to the start destination of the graph to
             // avoid building up a large stack of destinations
             // on the back stack as users select items
-            popUpTo(navController.graph.findStartDestination().id) {
+            popUpTo(navCont.graph.findStartDestination().id) {
                 saveState = true
             }
             // Avoid multiple copies of the same destination when
@@ -66,12 +73,10 @@ class FueltAppState(
         }
 
         when (appDestinations) {
-            HOME -> navController.navigateToHome(topLevelNavOptions)
-            ROUTINES -> navController.navigateToRoutines(topLevelNavOptions)
+            HOME -> navCont.navigateToHome(topLevelNavOptions)
+            ROUTINES -> navCont.navigateToRoutines(topLevelNavOptions)
         }
     }
-
-
 
 
 }

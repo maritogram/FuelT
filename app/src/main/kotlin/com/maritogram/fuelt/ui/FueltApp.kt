@@ -19,6 +19,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
@@ -34,35 +36,10 @@ import kotlin.reflect.KClass
 fun FueltApp(
     appState: FueltAppState
 ) {
-    val currentDestination = appState.currentDestination
+
 
     Scaffold(
-        bottomBar = {
-            AnimatedVisibility(
-                appState.inTopLevelDestination,
-                enter = slideInVertically(initialOffsetY = { it }),
-                    exit = slideOutVertically(targetOffsetY = { it })
 
-            ) {
-                FueltNavigationBar {
-                    appState.topLevelDestinations.forEach { destination ->
-                        val selected = currentDestination
-                            .isRouteInHierarchy(destination.route)
-                        FueltNavigationBarItem(
-                            selected = selected,
-                            label = {
-                                if (selected)
-                                    Text(destination.tabTitle)
-                            },
-                            icon = {
-                                Icon(Icons.Filled.Home, contentDescription = "idfk")
-                            },
-                            onClick = { appState.navigateToTopLevelDestination(destination) }
-                        )
-                    }
-                }
-            }
-        },
     ) { paddingValues ->
         Column(
             Modifier
@@ -86,8 +63,31 @@ fun FueltApp(
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Extension function to basically check if said route is part of the hierarchy of the destination
-private fun NavDestination?.isRouteInHierarchy(route: KClass<*>): Boolean =
+fun NavDestination?.isRouteInHierarchy(route: KClass<*>): Boolean =
     this?.hierarchy?.any {
         it.hasRoute(route)
     } ?: false

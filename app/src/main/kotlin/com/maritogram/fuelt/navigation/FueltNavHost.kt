@@ -3,14 +3,20 @@ package com.maritogram.fuelt.navigation
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.navigation
 import com.maritogram.fuelt.feature.routines.navigation.routinesScreen
 import com.maritogram.fuelt.feature.home.navigation.HomeRoute
 import com.maritogram.fuelt.feature.home.navigation.homeScreen
-import com.maritogram.fuelt.feature.workoutgeneration.navigation.navigateToWorkoutGeneration
+import com.maritogram.fuelt.feature.workoutgeneration.navigation.GeminiOnboardingRoute
+import com.maritogram.fuelt.feature.workoutgeneration.navigation.WorkoutGenerationRoute
+import com.maritogram.fuelt.feature.workoutgeneration.navigation.navigateToGeminiOnboarding
 import com.maritogram.fuelt.feature.workoutgeneration.navigation.workoutGenerationScreen
 import com.maritogram.fuelt.ui.FueltAppState
+import com.maritogram.fuelt.ui.MainScreensRoute
+import com.maritogram.fuelt.ui.MainScreensScreen
 
 @Composable
 fun FueltNavHost(
@@ -21,17 +27,27 @@ fun FueltNavHost(
     val navController = appState.navController
     NavHost(
         navController = navController,
-        startDestination = HomeRoute,
+        startDestination = MainScreensRoute,
         modifier = modifier,
         enterTransition = { EnterTransition.None },
-        exitTransition =  { ExitTransition.None }
+        exitTransition = { ExitTransition.None }
     ) {
-        // This is building the navgraph, not setting content as ohter composables.
-        homeScreen(
-            onFabClick = navController::navigateToWorkoutGeneration
-        )
-        routinesScreen()
-        workoutGenerationScreen()
+
+        MainScreensScreen(appState)
+
+//        // This is building the navgraph, not setting content as ohter composables.
+//        homeScreen(
+//            onFabClick = navController::navigateToGeminiOnboarding,
+//        )
+
+
+
+        navigation<GeminiOnboardingRoute>(startDestination = WorkoutGenerationRoute) {
+            workoutGenerationScreen(
+                onExitClick = navController::popBackStack)
+        }
+
+
     }
 
 }
