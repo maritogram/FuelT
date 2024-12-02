@@ -25,7 +25,6 @@ class MainActivity : ComponentActivity() {
         )
 
         setContent {
-
             // Creating our app state
             val appState = rememberFueltAppState()
             FueltTheme(

@@ -150,7 +150,7 @@ fun CircleDay(day: String) {
             text = day,
             textAlign = TextAlign.Center,
             fontSize = 12.sp,
-            color = Color.White
+//            color = Color.White
         )
     }
 }

@@ -24,6 +24,9 @@ fun FueltNavHost(
     modifier: Modifier = Modifier
 
 ) {
+
+
+
     val navController = appState.navController
     NavHost(
         navController = navController,
@@ -34,13 +37,6 @@ fun FueltNavHost(
     ) {
 
         MainScreensScreen(appState)
-
-//        // This is building the navgraph, not setting content as ohter composables.
-//        homeScreen(
-//            onFabClick = navController::navigateToGeminiOnboarding,
-//        )
-
-
 
         navigation<GeminiOnboardingRoute>(startDestination = WorkoutGenerationRoute) {
             workoutGenerationScreen(

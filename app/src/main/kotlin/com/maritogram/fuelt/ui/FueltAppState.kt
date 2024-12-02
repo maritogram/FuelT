@@ -46,13 +46,13 @@ class FueltAppState(
             .currentBackStackEntryAsState().value?.destination
     }
 
-
-    val inTopLevelDestination: Boolean
-        @Composable get() {
-            return AppDestinations.entries.any { topLevelDestination ->
-                currentDestination()?.hasRoute(route = topLevelDestination.route) ?: true
-            }
-        }
+//
+//    val inTopLevelDestination: Boolean
+//        @Composable get() {
+//            return AppDestinations.entries.any { topLevelDestination ->
+//                currentDestination()?.hasRoute(route = topLevelDestination.route) ?: true
+//            }
+//        }
 
     fun navigateToTopLevelDestination(
         appDestinations: AppDestinations,

@@ -27,6 +27,7 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.maritogram.fuelt.core.designsystem.component.FueltNavigationBar
 import com.maritogram.fuelt.core.designsystem.component.FueltNavigationBarItem
+import com.maritogram.fuelt.core.designsystem.theme.FueltTheme
 import com.maritogram.fuelt.navigation.AppDestinations
 import com.maritogram.fuelt.navigation.FueltNavHost
 import kotlin.reflect.KClass
@@ -37,41 +38,19 @@ fun FueltApp(
     appState: FueltAppState
 ) {
 
-
+    FueltTheme {
         Column(
             Modifier
                 .fillMaxSize()
 
 
-
         ) {
             FueltNavHost(appState)
         }
+    }
+
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // Extension function to basically check if said route is part of the hierarchy of the destination

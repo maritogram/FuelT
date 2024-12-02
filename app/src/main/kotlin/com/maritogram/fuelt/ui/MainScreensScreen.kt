@@ -1,6 +1,9 @@
 package com.maritogram.fuelt.ui
 
 import android.app.Activity
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -77,9 +80,14 @@ fun MainScreens(appState: FueltAppState) {
                     WindowInsets.safeDrawing.only(
                         WindowInsetsSides.Horizontal,
                     )
-                ).fillMaxSize()
+                )
+                .fillMaxSize()
         ) {
-            NavHost(navController = nestedNavController, startDestination = HomeRoute) {
+            NavHost(
+                navController = nestedNavController,
+                startDestination = HomeRoute,
+                enterTransition = { EnterTransition.None},
+                exitTransition = { ExitTransition.None }) {
                 homeScreen(onFabClick = appState.navController::navigateToGeminiOnboarding)
                 routinesScreen()
             }
