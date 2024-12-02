@@ -44,7 +44,8 @@ fun MainScreens(appState: FueltAppState) {
 
 
 
-    Scaffold(bottomBar =
+    Scaffold(topBar = {Text("Hey")},
+        bottomBar =
     {
         FueltNavigationBar {
             appState.topLevelDestinations.forEach { destination ->
