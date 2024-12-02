@@ -141,7 +141,9 @@ fun WorkoutGenerationScreen(
                         composable("First") {
                             TwoChoiceScreen(
                                 { heightForCard = it },
-                                { enableButton = it }
+                                { enableButton = it },
+                                {nextButtonAction = it},
+                                workoutGenController
                             )
                         }
 
@@ -325,7 +327,7 @@ fun GeneratedScreen(
         )
 
         FueltSegmentedButton(
-            listOf("Light", "Moderate", "Intense"),
+            listOf("Upper body", "Lower body", "Full body"),
             modifier = Modifier.align(Alignment.CenterHorizontally),
             selectedIndex = selectedOption3,
             onSelectedChange = { selectedOption3 = it },
@@ -339,8 +341,11 @@ fun GeneratedScreen(
 fun TwoChoiceScreen(
     onHeightChange: (Dp) -> Unit,
     onEnableButton: (Boolean) -> Unit,
+    changeNextAction: (()-> Unit) -> Unit,
+    workoutGenController: NavController
 ) {
 
+    changeNextAction({ workoutGenController.navigate("SecondAI") })
     var selectedIndex by rememberSaveable { mutableIntStateOf(2) }
 
     Column(modifier = Modifier.fillMaxSize()) {
