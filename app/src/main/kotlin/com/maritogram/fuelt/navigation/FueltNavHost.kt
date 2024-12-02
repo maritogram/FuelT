@@ -2,10 +2,13 @@ package com.maritogram.fuelt.navigation
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.maritogram.fuelt.feature.routines.navigation.routinesScreen
 import com.maritogram.fuelt.feature.home.navigation.HomeRoute
@@ -40,9 +43,14 @@ fun FueltNavHost(
 
         navigation<GeminiOnboardingRoute>(startDestination = WorkoutGenerationRoute) {
             workoutGenerationScreen(
-                onExitClick = navController::popBackStack)
+                parentNav = appState.navController)
         }
 
+        composable("test"){
+            Column {
+                Text("Good it works.")
+            }
+        }
 
     }
 
