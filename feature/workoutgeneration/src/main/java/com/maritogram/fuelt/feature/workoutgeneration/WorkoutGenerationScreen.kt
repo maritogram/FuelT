@@ -82,13 +82,6 @@ fun WorkoutGenerationScreen(
             var enableButton by remember { mutableStateOf(false) }
 
 
-            val routes = workoutGenController
-                .currentBackStack.value
-                .map { it.destination.route }
-                .joinToString(", ")
-
-
-            println(routes)
 
             var nextButtonAction by remember {
 

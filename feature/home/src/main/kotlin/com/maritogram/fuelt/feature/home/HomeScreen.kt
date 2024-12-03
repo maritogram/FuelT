@@ -89,14 +89,16 @@ internal fun HomeScreen(
 
             Spacer(modifier = Modifier.height(18.dp))
 
-            Text(
-                "Food suggestions",
-                style = MaterialTheme.typography.titleMedium
-            )
-
-            repeat(50) {
-                Text(it.toString())
-            }
+            //TODO: Maybe include this in the future.
+//
+//            Text(
+//                "Food suggestions",
+//                style = MaterialTheme.typography.titleMedium
+//            )
+//
+//            repeat(50) {
+//                Text(it.toString())
+//            }
 
         }
     }
