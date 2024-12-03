@@ -33,6 +33,7 @@ import com.maritogram.fuelt.core.designsystem.theme.surfaceContainerDark
 import com.maritogram.fuelt.feature.home.navigation.HomeRoute
 import com.maritogram.fuelt.feature.home.navigation.homeScreen
 import com.maritogram.fuelt.feature.routines.navigation.routinesScreen
+import com.maritogram.fuelt.feature.workoutgeneration.navigation.WorkoutGenerationRoute
 import com.maritogram.fuelt.feature.workoutgeneration.navigation.navigateToGeminiOnboarding
 
 
@@ -89,7 +90,7 @@ fun MainScreens(appState: FueltAppState) {
                 startDestination = HomeRoute,
                 enterTransition = { EnterTransition.None},
                 exitTransition = { ExitTransition.None }) {
-                homeScreen(onFabClick = appState.navController::navigateToGeminiOnboarding)
+                homeScreen(onFabClick = { appState.navController.navigate(WorkoutGenerationRoute) })
                 routinesScreen()
             }
         }

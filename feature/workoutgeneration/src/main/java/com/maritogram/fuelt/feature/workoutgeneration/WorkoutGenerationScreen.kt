@@ -1,6 +1,8 @@
 package com.maritogram.fuelt.feature.workoutgeneration
 
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -80,6 +82,14 @@ fun WorkoutGenerationScreen(
             var enableButton by remember { mutableStateOf(false) }
 
 
+            val routes = workoutGenController
+                .currentBackStack.value
+                .map { it.destination.route }
+                .joinToString(", ")
+
+
+            println(routes)
+
             var nextButtonAction by remember {
 
                 mutableStateOf({ workoutGenController.navigate(nextButtonDestination) })
@@ -136,7 +146,9 @@ fun WorkoutGenerationScreen(
                     // I know.. I know..
                     NavHost(
                         navController = workoutGenController,
-                        startDestination = "First"
+                        startDestination = "First",
+                        enterTransition = { EnterTransition.None },
+                        exitTransition = { ExitTransition.None }
                     ) {
                         composable("First") {
                             TwoChoiceScreen(
@@ -252,8 +264,8 @@ fun GeneratedScreen(
 ) {
 
     changeNextAction {
-        val navOptions = navOptions { popUpTo(parentNav.graph.startDestinationId) }
-        parentNav.navigate("test", navOptions)  }
+//        val navOptions = navOptions { popUpTo(parentNav.graph.startDestinationId) }
+        parentNav.navigate(GeminiLoadingRoute)  }
 
     onEnableButton(false)
 
@@ -403,3 +415,5 @@ fun TwoChoiceScreen(
 
 
 }
+
+
