@@ -56,6 +56,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.maritogram.fuelt.core.designsystem.theme.onSecondaryContainerDark
 import com.maritogram.fuelt.core.designsystem.theme.outlineVariantDark
+import com.maritogram.fuelt.feature.workingout.navigation.navigateToWorkingOutScreen
 
 @Composable
 fun WorkoutGenerationScreen(
@@ -148,7 +149,8 @@ fun WorkoutGenerationScreen(
                                 { heightForCard = it },
                                 { enableButton = it },
                                 {nextButtonAction = it},
-                                workoutGenController
+                                workoutGenController,
+                                parentNav
                             )
                         }
 
@@ -347,10 +349,10 @@ fun TwoChoiceScreen(
     onHeightChange: (Dp) -> Unit,
     onEnableButton: (Boolean) -> Unit,
     changeNextAction: (()-> Unit) -> Unit,
-    workoutGenController: NavController
+    workoutGenController: NavController,
+    parentNav: NavController
 ) {
 
-    changeNextAction({ workoutGenController.navigate("SecondAI") })
     var selectedIndex by rememberSaveable { mutableIntStateOf(2) }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -366,7 +368,7 @@ fun TwoChoiceScreen(
         Spacer(Modifier.height(11.dp))
 
 
-        // Sorry everyone
+        // Doing a switch is the same thing...
         if (selectedIndex == 0) {
             onEnableButton(true)
             onHeightChange(161.dp)
@@ -379,6 +381,7 @@ fun TwoChoiceScreen(
                 letterSpacing = .25.sp,
                 color = onSecondaryContainerDark.copy(0.6f)
             )
+            changeNextAction({ workoutGenController.navigate("SecondAI") })
         } else if (selectedIndex == 1) {
             onEnableButton(true)
             onHeightChange(140.dp)
@@ -392,6 +395,7 @@ fun TwoChoiceScreen(
                 letterSpacing = .25.sp,
                 color = onSecondaryContainerDark.copy(0.6f)
             )
+            changeNextAction({parentNav.navigateToWorkingOutScreen(navOptions { popUpTo(parentNav.graph.startDestinationId) })})
         } else {
             onHeightChange(140.dp)
             Text(

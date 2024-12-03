@@ -54,7 +54,8 @@ import kotlin.time.Duration.Companion.seconds
 @Composable
 fun WorkingOutScreen(
     //TODO: Add list of routine objects
-    viewModel: WorkingOutViewModel = hiltViewModel()
+    viewModel: WorkingOutViewModel = hiltViewModel(),
+    onExitClick: () -> Unit,
 
 
 ) {
@@ -65,7 +66,7 @@ fun WorkingOutScreen(
 
     Scaffold(
         topBar = {
-            WorkingOutTopAppBar()
+            WorkingOutTopAppBar(onExitClick)
         },
         floatingActionButton = {
             DoubleFAB(
@@ -115,6 +116,7 @@ fun DoubleFAB(
             modifier = Modifier.padding(bottom = 13.dp),
             onClick = {
                 if (status)
+
                     onPauseClick()
                 else
                     onResumeClick()
@@ -167,11 +169,11 @@ fun CountDown(currentTime: Int) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WorkingOutTopAppBar() {
+fun WorkingOutTopAppBar(onExitClick: () -> Unit) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(Color.Transparent),
         title = {
-            IconButton({}) {
+            IconButton(onExitClick) {
                 Icon(
                     imageVector = Icons.Default.Close,
                     contentDescription = "Close workout",
@@ -191,11 +193,3 @@ data class WorkingOutScreenState(
     val isTimerGoing: Boolean = false
 )
 
-
-@Preview
-@Composable
-fun WorkingOutScreenPreview() {
-    FueltTheme(darkTheme = true) {
-        WorkingOutScreen()
-    }
-}
