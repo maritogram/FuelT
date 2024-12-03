@@ -75,6 +75,7 @@ class FueltAppState(
         when (appDestinations) {
             HOME -> navCont.navigateToHome(topLevelNavOptions)
             ROUTINES -> navCont.navigateToRoutines(topLevelNavOptions)
+
         }
     }
 

@@ -18,6 +18,8 @@ import androidx.navigation.compose.navigation
 import com.maritogram.fuelt.feature.routines.navigation.routinesScreen
 import com.maritogram.fuelt.feature.home.navigation.HomeRoute
 import com.maritogram.fuelt.feature.home.navigation.homeScreen
+import com.maritogram.fuelt.feature.workingout.navigation.WorkingOutRoute
+import com.maritogram.fuelt.feature.workingout.navigation.workingOutScreen
 import com.maritogram.fuelt.feature.workoutgeneration.GeminiLoadingRoute
 import com.maritogram.fuelt.feature.workoutgeneration.GeminiLoadingScreen
 import com.maritogram.fuelt.feature.workoutgeneration.geminiLoadingScreen
@@ -41,7 +43,7 @@ fun FueltNavHost(
     val navController = appState.navController
     NavHost(
         navController = navController,
-        startDestination = MainScreensRoute,
+        startDestination = WorkingOutRoute,
         modifier = modifier,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
@@ -72,12 +74,9 @@ fun FueltNavHost(
             parentNav = appState.navController
         )
 
-//        // So funny
-//        workoutGenerationScreenNoT(
-//            parentNav = appState.navController
-//        )
-
         geminiLoadingScreen()
+
+        workingOutScreen()
 
     }
 

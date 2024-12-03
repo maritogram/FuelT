@@ -1,6 +1,7 @@
 package com.maritogram.fuelt.feature.home
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -65,10 +66,6 @@ internal fun HomeScreen(
             horizontalAlignment = Alignment.Start,
         ) {
 
-            Text("Hey", textAlign = TextAlign.Start)
-
-            Spacer(modifier = Modifier.height(20.dp))
-
             Text(
                 "Welcome back, \nMario",
                 style = MaterialTheme.typography.headlineMedium
@@ -108,14 +105,23 @@ internal fun HomeScreen(
 
 @Composable
 fun HomeFAB(onClick: () -> Unit = {}) {
+//https://stackoverflow.com/questions/65643015/animating-between-composables-in-navigation-with-compose
+    AnimatedVisibility(
+        visibleState = MutableTransitionState(
+            initialState = false
+        ).apply { targetState = true },
+        enter = slideInVertically(
+            initialOffsetY = { 40 }
+        ) + fadeIn(initialAlpha = 0.3f),
+        exit = slideOutVertically() + fadeOut(),
+    ) {
+        LargeFloatingActionButton(onClick = onClick) {
+            Icon(
+                modifier = Modifier.size(40.dp),
+                painter = painterResource(R.drawable.fitness_center),
+                contentDescription = "Dumbbell"
+            )
+        }
 
-    LargeFloatingActionButton(onClick = onClick) {
-        Icon(
-            modifier = Modifier.size(40.dp),
-            painter = painterResource(R.drawable.fitness_center),
-            contentDescription = "Dumbbell"
-        )
     }
-
-
 }
