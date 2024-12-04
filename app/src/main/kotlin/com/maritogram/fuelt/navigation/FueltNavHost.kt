@@ -43,7 +43,7 @@ fun FueltNavHost(
     val navController = appState.navController
     NavHost(
         navController = navController,
-        startDestination = MainScreensRoute,
+        startDestination = WorkingOutRoute,
         modifier = modifier,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
@@ -76,7 +76,10 @@ fun FueltNavHost(
 
         geminiLoadingScreen()
 
-        workingOutScreen(onExitClick = navController::popBackStack)
+        workingOutScreen(
+            onExitClick = navController::popBackStack,
+        )
+
 
     }
 
