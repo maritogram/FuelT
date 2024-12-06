@@ -60,7 +60,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -68,7 +67,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
@@ -96,7 +94,7 @@ import com.maritogram.fuelt.core.designsystem.theme.secondaryDark
 import com.maritogram.fuelt.core.designsystem.theme.surfaceContainerDark
 import com.maritogram.fuelt.core.designsystem.theme.tertiaryContainerDark
 import com.maritogram.fuelt.core.designsystem.theme.tertiaryDark
-import kotlinx.coroutines.CoroutineScope
+import com.maritogram.fuelt.core.model.exercise
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import kotlin.time.Duration.Companion.seconds
@@ -108,24 +106,8 @@ fun WorkingOutScreen(
     //TODO: Add list of routine objects
     viewModel: WorkingOutViewModel = hiltViewModel(),
     onExitClick: () -> Unit,
-
-
-    ) {
-    // Timer state, used by the pause fab, and the timer itself.
-
+) {
     // TODO: ALERT DIALOG WHEN TRYING TO LEAVE
-//
-//    var showAlertDialog by remember { mutableStateOf(false)}
-//
-////    BackHandler {
-////        showAlertDialog = true
-////    }
-////
-////    if(showAlertDialog){
-////        BasicAlertDialog({}){
-////            Text("HEY")
-////        }
-////    }
 
     val state = viewModel.state.collectAsState()
     LaunchedEffect(key1 = true, block = { viewModel.startTimer() })
@@ -163,17 +145,11 @@ fun WorkingOutScreen(
 
             Spacer(Modifier.height(37.dp))
 
-            ExerciseBlocks()
+            ExerciseBlocks(vmBlocks = viewModel.exerciseBlocks)
 
             Spacer(Modifier.height(195.dp))
-
-
         }
-
-
     }
-
-
 }
 
 
@@ -223,15 +199,16 @@ fun DoubleFAB(
 
 
 @Composable
-fun ExerciseBlocks() {
+fun ExerciseBlocks(
+    vmBlocks: ArrayList<ArrayList<exercise>>
+) {
+
+    var updatedExerciseBlocks by remember { mutableStateOf(vmBlocks) }
 
 
     // Create top lines
-
-
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
 
-        // Display 10 items
         val pagerState = rememberPagerState(pageCount = {
             3
         })
@@ -270,6 +247,8 @@ fun ExerciseBlocks() {
             modifier = Modifier.fillMaxSize(),
             verticalAlignment = Alignment.Top
         ) { page ->
+
+
             Column(modifier = Modifier.padding(horizontal = 24.dp)) {// Our page content
                 Text(
                     text = "Block $page",
@@ -277,26 +256,103 @@ fun ExerciseBlocks() {
                     letterSpacing = 0.sp,
                     lineHeight = 36.sp,
                     fontSize = 28.sp
-
                 )
 
                 Spacer(Modifier.height(21.dp))
 
 
-                ExerciseSegment(ExerciseSegments.FIRSTSEGMENT)
-                for (i in 1..page) {
-                    ExerciseSegment(test = i)
+                updatedExerciseBlocks[page].size.let {
+                    if (it <= 1) {
+                        ExerciseSegment(
+                            segment = ExerciseSegments.FIRSTSEGMENT,
+                            exercise = updatedExerciseBlocks[page][0],
+                            onExerciseUpdate = { updatedExercise ->
+                                val updatedBlock = updatedExerciseBlocks[page].toMutableList()
+                                updatedBlock[0] = updatedExercise
+                                updatedExerciseBlocks =
+                                    updatedExerciseBlocks.mapIndexed { index, block ->
+                                        if (index == page) updatedBlock else block
+                                    } as ArrayList<ArrayList<exercise>>
+                            },
+                            onSetComplete = {
+                                val updatedBlock = updatedExerciseBlocks[page].toMutableList()
+                                updatedBlock[0] = it
+                                updatedExerciseBlocks =
+                                    updatedExerciseBlocks.mapIndexed { i, block ->
+                                        if (i == page) updatedBlock else block
+                                    } as ArrayList<ArrayList<exercise>>
+                            }
+                        )
+                    } else {
+                        ExerciseSegment(
+                            segment = ExerciseSegments.FIRSTSEGMENT,
+                            exercise = updatedExerciseBlocks[page][0],
+                            onExerciseUpdate = { updatedExercise ->
+                                val updatedBlock = updatedExerciseBlocks[page].toMutableList()
+                                updatedBlock[0] = updatedExercise
+                                updatedExerciseBlocks =
+                                    updatedExerciseBlocks.mapIndexed { index, block ->
+                                        if (index == page) updatedBlock else block
+                                    } as ArrayList<ArrayList<exercise>>
+                            },
+                            onSetComplete = {
+                                val updatedBlock = updatedExerciseBlocks[page].toMutableList()
+                                updatedBlock[0] = it
+                                updatedExerciseBlocks =
+                                    updatedExerciseBlocks.mapIndexed { i, block ->
+                                        if (i == page) updatedBlock else block
+                                    } as ArrayList<ArrayList<exercise>>
+                            }
+
+                        )
+                        for (i in 1..it - 2) {
+                            ExerciseSegment(
+                                exercise = updatedExerciseBlocks[page][i],
+                                onExerciseUpdate = { updatedExercise ->
+                                    val updatedBlock = updatedExerciseBlocks[page].toMutableList()
+                                    updatedBlock[i] = updatedExercise
+                                    updatedExerciseBlocks =
+                                        updatedExerciseBlocks.mapIndexed { index, block ->
+                                            if (index == page) updatedBlock else block
+                                        } as ArrayList<ArrayList<exercise>>
+                                }, onSetComplete = {
+                                    val updatedBlock = updatedExerciseBlocks[page].toMutableList()
+                                    updatedBlock[i] = it
+                                    updatedExerciseBlocks =
+                                        updatedExerciseBlocks.mapIndexed { ind, block ->
+                                            if (ind == page) updatedBlock else block
+                                        } as ArrayList<ArrayList<exercise>>
+                                }
+                            )
+                        }
+                        ExerciseSegment(
+                            ExerciseSegments.FINALSEGMENT,
+                            exercise = updatedExerciseBlocks[page][it - 1],
+                            onExerciseUpdate = { updatedExercise ->
+                                val updatedBlock = updatedExerciseBlocks[page].toMutableList()
+                                updatedBlock[it - 1] = updatedExercise // Update at correct index
+                                updatedExerciseBlocks =
+                                    updatedExerciseBlocks.mapIndexed { index, block ->
+                                        if (index == page) updatedBlock else block
+                                    } as ArrayList<ArrayList<exercise>>
+                            },
+                            onSetComplete = { updEx ->
+                                val updatedBlock = updatedExerciseBlocks[page].toMutableList()
+                                updatedBlock[it - 1] = updEx
+                                updatedExerciseBlocks =
+                                    updatedExerciseBlocks.mapIndexed { i, block ->
+                                        if (i == page) updatedBlock else block
+                                    } as ArrayList<ArrayList<exercise>>
+                            }
+                        )
+
+                    }
                 }
-                ExerciseSegment(ExerciseSegments.FINALSEGMENT)
 
 
             }
         }
     }
-
-
-    // Create block
-
 
 }
 
@@ -309,11 +365,13 @@ enum class ExerciseSegments {
 @Composable
 fun ExerciseSegment(
     segment: ExerciseSegments? = null,
-    test: Int? = null
+    exercise: exercise,
+    onExerciseUpdate: (exercise) -> Unit,
+    onSetComplete: (exercise) -> Unit
 ) {
 
     if (segment == ExerciseSegments.FIRSTSEGMENT) {
-        ExerciseSegmentCard()
+        ExerciseSegmentCard(exercise, onExerciseUpdate, onSetComplete)
 
     } else if (segment == ExerciseSegments.FINALSEGMENT) {
         VerticalDivider(
@@ -322,7 +380,7 @@ fun ExerciseSegment(
                 .offset(x = 41.dp),
             color = outlineVariantDark.copy(0.40f)
         )
-        ExerciseSegmentCard(test)
+        ExerciseSegmentCard(exercise, onExerciseUpdate, onSetComplete)
 
     } else {
         VerticalDivider(
@@ -331,7 +389,7 @@ fun ExerciseSegment(
                 .offset(x = 41.dp),
             color = outlineVariantDark.copy(0.40f)
         )
-        ExerciseSegmentCard(test)
+        ExerciseSegmentCard(exercise, onExerciseUpdate, onSetComplete)
 
     }
 }
@@ -339,7 +397,14 @@ fun ExerciseSegment(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExerciseSegmentCard(
-    test: Int? = null
+    exercise: exercise = exercise(
+        name = "Test Exercise",
+        sets = 5,
+        reps = arrayListOf(1, 1, 2, 3, 4),
+        weight = arrayListOf(1, 1, 2, 3, 4)
+    ),
+    onExerciseUpdate: (exercise) -> Unit,
+    onSetComplete: (exercise) -> Unit
 ) {
 
     val sheetState = rememberModalBottomSheetState(
@@ -371,14 +436,14 @@ fun ExerciseSegmentCard(
 
             Column(modifier = Modifier.padding(start = 13.dp)) {
                 Text(
-                    text = "Back Squat",
+                    text = exercise?.name.toString(),
                     fontSize = 16.sp,
                     letterSpacing = 0.5.sp,
                     lineHeight = 24.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "5 Sets • 8 Reps • 5 lb ",
+                    text = "${exercise?.sets} Sets",
                     lineHeight = 20.sp,
                     letterSpacing = 0.25.sp,
                     fontSize = 14.sp
@@ -407,9 +472,10 @@ fun ExerciseSegmentCard(
             if (showBottomSheet) {
                 ExerciseBottomSheet(
                     sheetState = sheetState,
-                    scope = scope,
                     showBottomSheet = { showBottomSheet = it },
-                    test = test
+                    exercise,
+                    onExerciseUpdate,
+                    onSetComplete
                 )
             }
 
@@ -425,11 +491,12 @@ fun ExerciseSegmentCard(
 @Composable
 fun ExerciseBottomSheet(
     sheetState: SheetState,
-    scope: CoroutineScope,
     showBottomSheet: (Boolean) -> Unit,
-    test: Int?
-) {
+    exercise: exercise,
+    onExerciseUpdate: (exercise) -> Unit,
+    onSetComplete: (exercise) -> Unit
 
+) {
 
     ModalBottomSheet(
         onDismissRequest = {
@@ -469,7 +536,7 @@ fun ExerciseBottomSheet(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Back Squat",
+                    text = exercise?.name.toString(),
                     lineHeight = 40.sp,
                     letterSpacing = 0.sp,
                     fontSize = 32.sp,
@@ -511,7 +578,7 @@ fun ExerciseBottomSheet(
             Spacer(Modifier.height(31.dp))
 
             // Focusable things.
-            SetsAndReps()
+            SetsAndReps(exercise, onExerciseUpdate, onSetComplete)
 
 
         }
@@ -523,19 +590,24 @@ fun ExerciseBottomSheet(
 }
 
 @Composable
-fun SetsAndReps() {
+fun SetsAndReps(
+    exercise: exercise,
+    onExerciseUpdate: (exercise) -> Unit,
+    onSetComplete: (exercise) -> Unit
 
+) {
 
-    val focusRequester = remember { FocusRequester() }
-
-    val localFocus = LocalFocusManager.current
-
+    var workoutCopy by remember { mutableStateOf(exercise.copy()) }
 
     LazyColumn {
-        items(5) { i ->
-
+        items(exercise.sets) { setNumber ->
+            val localFocus = LocalFocusManager.current
             var showDetails by remember { mutableStateOf(false) }
             val focusRequester = remember { FocusRequester() }
+
+            var completed by remember { mutableStateOf(workoutCopy.completedReps[setNumber]) }
+
+
             var circleColor by remember { mutableStateOf(Color.Transparent) }
 
 
@@ -548,6 +620,7 @@ fun SetsAndReps() {
                                 showDetails = true
                                 circleColor = tertiaryDark
                             }
+
                             else -> {
                                 showDetails = false
                                 circleColor = Color.Transparent
@@ -563,16 +636,15 @@ fun SetsAndReps() {
 
             ) {
 
-
                 Box(
                     modifier = Modifier
                         .size(26.dp)
-                        .background(circleColor, CircleShape)
+                        .background(if (completed) Color.Green else circleColor, CircleShape)
                         .border(width = 1.dp, color = tertiaryDark, CircleShape)
                         .focusable()
                 ) {
 
-                    if (i != 4) {
+                    if (setNumber != exercise.sets - 1) {
                         androidx.compose.foundation.Canvas(
                             modifier = Modifier
                                 .fillMaxHeight()
@@ -591,9 +663,9 @@ fun SetsAndReps() {
 
                 Spacer(Modifier.width(17.dp))
 
-                var reps by remember { mutableStateOf("") }
+                var rep by remember { mutableStateOf(workoutCopy.reps[setNumber].toString()) }
                 OutlinedTextField(
-                    value = reps,
+                    value = rep,
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(
                         imeAction =
@@ -601,24 +673,33 @@ fun SetsAndReps() {
                     ),
                     keyboardActions = KeyboardActions(
                         onDone = {
-                            localFocus.moveFocus(FocusDirection.Previous)
+                            localFocus.clearFocus()
                         }),
                     onValueChange = {
-                        if (it.all { char -> char.isDigit() } && it.length <= 3) {
-                            reps = it
+
+                        val sanitizedValue = it.filter { it.isDigit() || it.isWhitespace() }.take(3)
+                        if (sanitizedValue == it) {
+                            rep = sanitizedValue
+
+                            val updatedReps = workoutCopy.reps.toMutableList()
+                            updatedReps[setNumber] = it.toIntOrNull() ?: 0
+                            workoutCopy = workoutCopy.copy(reps = updatedReps as ArrayList<Int>)
+
+                            onExerciseUpdate(workoutCopy)
                         }
+
                     },
                     label = { Text("Reps") },
                     modifier = Modifier
                         .width(150.dp)
-
                 )
 
                 Spacer(Modifier.width(17.dp))
 
-                var weight by remember { mutableIntStateOf(0) }
+                var weight by remember { mutableStateOf(workoutCopy.weight[setNumber].toString()) }
+
                 OutlinedTextField(
-                    value = weight.toString(),
+                    value = weight,
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(
                         imeAction =
@@ -626,13 +707,19 @@ fun SetsAndReps() {
                     ),
                     keyboardActions = KeyboardActions(
                         onDone = {
-                            localFocus.moveFocus(FocusDirection.Previous)
+                            localFocus.clearFocus()
                         }),
                     onValueChange = {
-                        if (it.isEmpty()) {
-                            weight = 0
-                        } else if (it.all { char -> char.isDigit() } && it.length <= 3) {
-                            weight = it.toIntOrNull() ?: 0
+                        val sanitizedValue = it.filter { it.isDigit() || it.isWhitespace() }.take(3)
+                        if (sanitizedValue == it) {
+                            weight = sanitizedValue
+
+                            val updatedWeights = workoutCopy.weight.toMutableList()
+                            updatedWeights[setNumber] = it.toIntOrNull() ?: 0
+                            workoutCopy =
+                                workoutCopy.copy(weight = updatedWeights as ArrayList<Int>)
+
+                            onExerciseUpdate(workoutCopy)
                         }
                     },
                     label = { Text("Weight (lb)") },
@@ -653,7 +740,7 @@ fun SetsAndReps() {
                 ) {
                     Spacer(Modifier.width(25.dp))
 
-                    if (i != 4) {
+                    if (setNumber != exercise.sets - 1) {
                         androidx.compose.foundation.Canvas(
                             modifier = Modifier
                                 .fillMaxHeight()
@@ -668,32 +755,25 @@ fun SetsAndReps() {
                         }
                     }
 
-
                     Button(
-                        onClick = {},
+                        onClick = {
+                            completed = true
+
+                            val updatedCompletions = workoutCopy.completedReps.toMutableList()
+                            updatedCompletions[setNumber] = true
+
+                            workoutCopy = workoutCopy.copy(completedReps = updatedCompletions as ArrayList<Boolean>)
+                            onSetComplete(workoutCopy)
+                        },
                         shape = RoundedCornerShape(7.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = tertiaryDark),
                         contentPadding = PaddingValues(horizontal = 2.dp),
                         modifier = Modifier
                             .defaultMinSize(minWidth = 275.dp, minHeight = 31.dp)
                     ) {
-                        Text("Mark as completed ")
+                        Text("Mark as completed")
                     }
 
-                    Button(
-                        onClick = {},
-                        shape = RoundedCornerShape(7.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = errorDark),
-                        contentPadding = PaddingValues(horizontal = 2.dp),
-                        modifier = Modifier
-                            .defaultMinSize(minWidth = 31.dp, minHeight = 31.dp)
-                    ) {
-                        Icon(
-                            modifier = Modifier.size(20.dp),
-                            imageVector = Icons.Default.Close,
-                            contentDescription = ""
-                        )
-                    }
                 }
             } else {
                 Spacer(Modifier.height(17.dp))

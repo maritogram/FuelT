@@ -1,14 +1,14 @@
 package com.maritogram.fuelt.core.data.repository
 
-import com.maritogram.fuelt.core.model.Workout
+import com.maritogram.fuelt.core.model.exercise
 import kotlinx.coroutines.flow.Flow
 
 interface IWorkoutRepository {
 
-    fun getWorkouts() : List<Workout>
+    fun getWorkouts() : List<exercise>
 
     // Get workouts done during the specified week
-    fun getWorkouts(date: String) : Flow<List<Workout>>
+    fun getWorkouts(date: String) : Flow<List<exercise>>
 
     fun insertWorkout() : Unit
 

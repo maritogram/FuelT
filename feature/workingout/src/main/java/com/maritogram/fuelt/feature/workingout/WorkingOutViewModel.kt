@@ -1,14 +1,13 @@
 package com.maritogram.fuelt.feature.workingout
 
 import androidx.lifecycle.ViewModel
+import com.maritogram.fuelt.core.model.exercise
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -16,6 +15,52 @@ import javax.inject.Inject
 class WorkingOutViewModel @Inject constructor() : ViewModel() {
 
     val state = MutableStateFlow<WorkingOutScreenState>(WorkingOutScreenState())
+
+    var exerciseBlocks: ArrayList<ArrayList<exercise>> = arrayListOf(
+        arrayListOf(
+            exercise(
+                name = "Test 1",
+                sets = 2,
+                reps = arrayListOf(1, 2),
+                weight = arrayListOf(1, 2)
+            ),
+            exercise(
+                name = "Test 2",
+                sets = 2,
+                reps = arrayListOf(1, 2),
+                weight = arrayListOf(1, 2)
+            )
+        ),
+        arrayListOf(
+            exercise(
+                name = "Test 1",
+                sets = 2,
+                reps = arrayListOf(1, 2),
+                weight = arrayListOf(1, 2)
+            ),
+            exercise(
+                name = "Test 2",
+                sets = 2,
+                reps = arrayListOf(1, 2),
+                weight = arrayListOf(1, 2)
+            ), exercise(
+                name = "Test 3",
+                sets = 2,
+                reps = arrayListOf(1, 2),
+                weight = arrayListOf(1, 2)
+            )
+        ),
+        arrayListOf(
+            exercise(
+                name = "Test 1",
+                sets = 2,
+                reps = arrayListOf(1, 2),
+                weight = arrayListOf(1, 2)
+            )
+        )
+
+
+    )
 
 
     fun startTimer() {
