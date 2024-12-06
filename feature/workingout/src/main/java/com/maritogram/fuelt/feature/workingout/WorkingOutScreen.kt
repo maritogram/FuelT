@@ -63,6 +63,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -85,13 +86,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.maritogram.fuelt.core.designsystem.theme.errorDark
+import com.maritogram.fuelt.core.designsystem.theme.onSurfaceDark
 import com.maritogram.fuelt.core.designsystem.theme.onSurfaceVariantDark
 import com.maritogram.fuelt.core.designsystem.theme.onSurfaceVariantLight
 import com.maritogram.fuelt.core.designsystem.theme.outlineDark
 import com.maritogram.fuelt.core.designsystem.theme.outlineVariantDark
 import com.maritogram.fuelt.core.designsystem.theme.secondaryDark
 import com.maritogram.fuelt.core.designsystem.theme.surfaceContainerDark
+import com.maritogram.fuelt.core.designsystem.theme.surfaceContainerHighDark
+import com.maritogram.fuelt.core.designsystem.theme.surfaceContainerHighestDark
 import com.maritogram.fuelt.core.designsystem.theme.tertiaryContainerDark
 import com.maritogram.fuelt.core.designsystem.theme.tertiaryDark
 import com.maritogram.fuelt.core.model.exercise
@@ -203,7 +206,7 @@ fun ExerciseBlocks(
     vmBlocks: ArrayList<ArrayList<exercise>>
 ) {
 
-    var updatedExerciseBlocks by remember { mutableStateOf(vmBlocks) }
+    var updatedExerciseBlocks by rememberSaveable { mutableStateOf(vmBlocks) }
 
 
     // Create top lines
@@ -570,8 +573,32 @@ fun ExerciseBottomSheet(
             }
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Button({}) { }
-                Button({}) { }
+                Button(
+                    {},
+                    contentPadding = PaddingValues(horizontal = 8.dp),
+                    modifier = Modifier
+                        .defaultMinSize(minWidth = 112.dp, minHeight = 40.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = surfaceContainerHighestDark)
+                ) {
+                    Icon(painter = painterResource(R.drawable.barchart), "", tint = onSurfaceDark)
+                    Spacer(Modifier.width(6.dp))
+                    Text("History", color = onSurfaceDark)
+
+                }
+                Spacer(Modifier.width(12.dp))
+                Button(
+                    {},
+                    contentPadding = PaddingValues(horizontal = 8.dp),
+                    modifier = Modifier
+                        .defaultMinSize(minWidth = 174.dp, minHeight = 40.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = surfaceContainerHighestDark)
+                ) {
+                    Icon(painter = painterResource(R.drawable.replay), "", tint = onSurfaceDark)
+                    Spacer(Modifier.width(6.dp))
+                    Text("Replace exercise", color = onSurfaceDark)
+
+
+                }
 
             }
 
@@ -639,7 +666,7 @@ fun SetsAndReps(
                 Box(
                     modifier = Modifier
                         .size(26.dp)
-                        .background(if (completed) Color.Green else circleColor, CircleShape)
+                        .background(if (completed) Color(0xFF7DB176) else circleColor, CircleShape)
                         .border(width = 1.dp, color = tertiaryDark, CircleShape)
                         .focusable()
                 ) {
@@ -736,16 +763,14 @@ fun SetsAndReps(
                     horizontalArrangement = Arrangement.End,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(end = 19.dp)
+                        .padding(end = 48.dp)
                 ) {
-                    Spacer(Modifier.width(25.dp))
-
                     if (setNumber != exercise.sets - 1) {
                         androidx.compose.foundation.Canvas(
                             modifier = Modifier
                                 .fillMaxHeight()
                                 .width(2.dp)
-                                .offset(x = (-29.7).dp, y = 37.2.dp) // Adjust offset as needed
+                                .offset(x = (-49).dp, y = 37.2.dp) // Adjust offset as needed
                         ) {
                             drawLine(
                                 color = tertiaryDark,
@@ -757,13 +782,27 @@ fun SetsAndReps(
 
                     Button(
                         onClick = {
-                            completed = true
 
-                            val updatedCompletions = workoutCopy.completedReps.toMutableList()
-                            updatedCompletions[setNumber] = true
+                            if (!completed) {
+                                completed = true
 
-                            workoutCopy = workoutCopy.copy(completedReps = updatedCompletions as ArrayList<Boolean>)
-                            onSetComplete(workoutCopy)
+                                val updatedCompletions = workoutCopy.completedReps.toMutableList()
+                                updatedCompletions[setNumber] = true
+
+                                workoutCopy =
+                                    workoutCopy.copy(completedReps = updatedCompletions as ArrayList<Boolean>)
+                                onSetComplete(workoutCopy)
+                            } else {
+                                completed = false
+
+                                val updatedCompletions = workoutCopy.completedReps.toMutableList()
+                                updatedCompletions[setNumber] = false
+
+                                workoutCopy =
+                                    workoutCopy.copy(completedReps = updatedCompletions as ArrayList<Boolean>)
+                                onSetComplete(workoutCopy)
+                            }
+
                         },
                         shape = RoundedCornerShape(7.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = tertiaryDark),
@@ -771,7 +810,10 @@ fun SetsAndReps(
                         modifier = Modifier
                             .defaultMinSize(minWidth = 275.dp, minHeight = 31.dp)
                     ) {
-                        Text("Mark as completed")
+                        Text(
+
+                            if (!completed) "Mark as completed" else "Unmark completion"
+                        )
                     }
 
                 }
@@ -785,7 +827,6 @@ fun SetsAndReps(
 
 
     }
-
 
 }
 

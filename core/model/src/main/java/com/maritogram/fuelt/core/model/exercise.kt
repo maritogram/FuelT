@@ -1,7 +1,9 @@
 package com.maritogram.fuelt.core.model
 
+import kotlinx.serialization.Serializable
 import java.util.Collections
 
+@Serializable
 data class exercise(
     val name: String,
     val completionDate: String? = null,

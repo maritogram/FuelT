@@ -32,30 +32,30 @@ import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.maritogram.fuelt.core.designsystem.theme.outlineDark
-import com.maritogram.fuelt.core.designsystem.theme.secondaryContainerDark
-import com.maritogram.fuelt.core.designsystem.theme.secondaryDark
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.maritogram.fuelt.core.designsystem.theme.onSecondaryContainerDark
+import com.maritogram.fuelt.core.designsystem.theme.outlineDark
 import com.maritogram.fuelt.core.designsystem.theme.outlineVariantDark
+import com.maritogram.fuelt.core.designsystem.theme.secondaryContainerDark
+import com.maritogram.fuelt.core.designsystem.theme.secondaryDark
 import com.maritogram.fuelt.feature.workingout.navigation.navigateToWorkingOutScreen
 
 @Composable
@@ -81,7 +81,6 @@ fun WorkoutGenerationScreen(
             val workoutGenController = rememberNavController()
             var heightForCard by remember { mutableStateOf(140.dp) }
             var enableButton by remember { mutableStateOf(false) }
-
 
 
             var nextButtonAction by remember {
@@ -148,7 +147,7 @@ fun WorkoutGenerationScreen(
                             TwoChoiceScreen(
                                 { heightForCard = it },
                                 { enableButton = it },
-                                {nextButtonAction = it},
+                                { nextButtonAction = it },
                                 workoutGenController,
                                 parentNav
                             )
@@ -158,7 +157,7 @@ fun WorkoutGenerationScreen(
                             GeneratedScreen(
                                 { heightForCard = it },
                                 { enableButton = it },
-                                { nextButtonAction = it},
+                                { nextButtonAction = it },
                                 parentNav
                             )
 
@@ -253,14 +252,16 @@ fun FueltSegmentedButton(
 fun GeneratedScreen(
     onHeightChange: (Dp) -> Unit,
     onEnableButton: (Boolean) -> Unit,
-    changeNextAction: (()-> Unit) -> Unit,
+    changeNextAction: (() -> Unit) -> Unit,
     parentNav: NavController
 
 ) {
 
-    changeNextAction {
-//        val navOptions = navOptions { popUpTo(parentNav.graph.startDestinationId) }
-        parentNav.navigate(GeminiLoadingRoute)  }
+
+    val options1 = arrayListOf("< 30 mins", "30-50 mins", "50+ mins")
+    val options2 = arrayListOf("Light", "Moderate", "Intense")
+    val options3 = arrayListOf("Upper body", "Lower body", "Full body")
+
 
     onEnableButton(false)
 
@@ -268,6 +269,18 @@ fun GeneratedScreen(
         var selectedOption1 by rememberSaveable { mutableIntStateOf(3) }
         var selectedOption2 by rememberSaveable { mutableIntStateOf(3) }
         var selectedOption3 by rememberSaveable { mutableIntStateOf(3) }
+
+
+        changeNextAction {
+//        val navOptions = navOptions { popUpTo(parentNav.graph.startDestinationId) }
+            parentNav.navigate(
+                GeminiLoadingRoute(
+                    options1[selectedOption1],
+                    options2[selectedOption2],
+                    options3[selectedOption3]
+                )
+            )
+        }
 
         if (selectedOption3 != 3 && selectedOption2 != 3 && selectedOption1 != 3)
             onEnableButton(true)
@@ -289,7 +302,7 @@ fun GeneratedScreen(
         Spacer(modifier = Modifier.height(10.dp))
 
         FueltSegmentedButton(
-            listOf("< 30 mins", "30-50 mins", "50+ mins"),
+            options1,
             modifier = Modifier.align(Alignment.CenterHorizontally),
             selectedIndex = selectedOption1,
             onSelectedChange = { selectedOption1 = it },
@@ -313,7 +326,7 @@ fun GeneratedScreen(
         Spacer(modifier = Modifier.height(10.dp))
 
         FueltSegmentedButton(
-            listOf("Light", "Moderate", "Intense"),
+            options2,
             modifier = Modifier.align(Alignment.CenterHorizontally),
             selectedIndex = selectedOption2,
             onSelectedChange = { selectedOption2 = it },
@@ -334,13 +347,14 @@ fun GeneratedScreen(
         )
 
         FueltSegmentedButton(
-            listOf("Upper body", "Lower body", "Full body"),
+            options3,
             modifier = Modifier.align(Alignment.CenterHorizontally),
             selectedIndex = selectedOption3,
             onSelectedChange = { selectedOption3 = it },
             width = 118.dp,
         )
     }
+
 }
 
 
@@ -348,7 +362,7 @@ fun GeneratedScreen(
 fun TwoChoiceScreen(
     onHeightChange: (Dp) -> Unit,
     onEnableButton: (Boolean) -> Unit,
-    changeNextAction: (()-> Unit) -> Unit,
+    changeNextAction: (() -> Unit) -> Unit,
     workoutGenController: NavController,
     parentNav: NavController
 ) {
@@ -395,7 +409,7 @@ fun TwoChoiceScreen(
                 letterSpacing = .25.sp,
                 color = onSecondaryContainerDark.copy(0.6f)
             )
-            changeNextAction({parentNav.navigateToWorkingOutScreen(navOptions { popUpTo(parentNav.graph.startDestinationId) })})
+            changeNextAction({ parentNav.navigateToWorkingOutScreen(navOptions { popUpTo(parentNav.graph.startDestinationId) }) })
         } else {
             onHeightChange(140.dp)
             Text(

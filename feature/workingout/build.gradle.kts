@@ -12,4 +12,6 @@ dependencies {
 
     implementation(libs.androidx.junit.ktx)
     implementation(libs.material)
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
+
 }
