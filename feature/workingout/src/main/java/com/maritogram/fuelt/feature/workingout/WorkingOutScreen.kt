@@ -1,5 +1,6 @@
 package com.maritogram.fuelt.feature.workingout
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -78,6 +79,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -93,11 +95,11 @@ import com.maritogram.fuelt.core.designsystem.theme.outlineDark
 import com.maritogram.fuelt.core.designsystem.theme.outlineVariantDark
 import com.maritogram.fuelt.core.designsystem.theme.secondaryDark
 import com.maritogram.fuelt.core.designsystem.theme.surfaceContainerDark
-import com.maritogram.fuelt.core.designsystem.theme.surfaceContainerHighDark
 import com.maritogram.fuelt.core.designsystem.theme.surfaceContainerHighestDark
 import com.maritogram.fuelt.core.designsystem.theme.tertiaryContainerDark
 import com.maritogram.fuelt.core.designsystem.theme.tertiaryDark
 import com.maritogram.fuelt.core.model.exercise
+import com.maritogram.fuelt.feature.workoutgeneration.WorkingOutViewModel
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import kotlin.time.Duration.Companion.seconds
@@ -107,13 +109,16 @@ import kotlin.time.Duration.Companion.seconds
 @Composable
 fun WorkingOutScreen(
     //TODO: Add list of routine objects
-    viewModel: WorkingOutViewModel = hiltViewModel(),
+    viewModel: NEWWorkingOutViewModel = hiltViewModel(),
+    exerciseBlocksvm: WorkingOutViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     onExitClick: () -> Unit,
 ) {
     // TODO: ALERT DIALOG WHEN TRYING TO LEAVE
 
     val state = viewModel.state.collectAsState()
-    LaunchedEffect(key1 = true, block = { viewModel.startTimer() })
+    LaunchedEffect(key1 = true, block = {
+        viewModel.startTimer()
+    })
 
     Scaffold(
         topBar = {
@@ -148,7 +153,7 @@ fun WorkingOutScreen(
 
             Spacer(Modifier.height(37.dp))
 
-            ExerciseBlocks(vmBlocks = viewModel.exerciseBlocks)
+            ExerciseBlocks(vmBlocks = exerciseBlocksvm.exerciseBlocks)
 
             Spacer(Modifier.height(195.dp))
         }
@@ -206,7 +211,7 @@ fun ExerciseBlocks(
     vmBlocks: ArrayList<ArrayList<exercise>>
 ) {
 
-    var updatedExerciseBlocks by rememberSaveable { mutableStateOf(vmBlocks) }
+    var updatedExerciseBlocks: ArrayList<ArrayList<exercise>> by rememberSaveable { mutableStateOf(vmBlocks) }
 
 
     // Create top lines
@@ -304,7 +309,7 @@ fun ExerciseBlocks(
                                 updatedExerciseBlocks =
                                     updatedExerciseBlocks.mapIndexed { i, block ->
                                         if (i == page) updatedBlock else block
-                                    } as ArrayList<ArrayList<exercise>>
+                                    }  as ArrayList<ArrayList<exercise>>
                             }
 
                         )
@@ -317,14 +322,14 @@ fun ExerciseBlocks(
                                     updatedExerciseBlocks =
                                         updatedExerciseBlocks.mapIndexed { index, block ->
                                             if (index == page) updatedBlock else block
-                                        } as ArrayList<ArrayList<exercise>>
+                                        }  as ArrayList<ArrayList<exercise>>
                                 }, onSetComplete = {
                                     val updatedBlock = updatedExerciseBlocks[page].toMutableList()
                                     updatedBlock[i] = it
                                     updatedExerciseBlocks =
                                         updatedExerciseBlocks.mapIndexed { ind, block ->
                                             if (ind == page) updatedBlock else block
-                                        } as ArrayList<ArrayList<exercise>>
+                                        }  as ArrayList<ArrayList<exercise>>
                                 }
                             )
                         }
@@ -337,7 +342,7 @@ fun ExerciseBlocks(
                                 updatedExerciseBlocks =
                                     updatedExerciseBlocks.mapIndexed { index, block ->
                                         if (index == page) updatedBlock else block
-                                    } as ArrayList<ArrayList<exercise>>
+                                    }  as ArrayList<ArrayList<exercise>>
                             },
                             onSetComplete = { updEx ->
                                 val updatedBlock = updatedExerciseBlocks[page].toMutableList()
@@ -345,7 +350,7 @@ fun ExerciseBlocks(
                                 updatedExerciseBlocks =
                                     updatedExerciseBlocks.mapIndexed { i, block ->
                                         if (i == page) updatedBlock else block
-                                    } as ArrayList<ArrayList<exercise>>
+                                    }  as ArrayList<ArrayList<exercise>>
                             }
                         )
 

@@ -1,4 +1,4 @@
-package com.maritogram.fuelt.feature.workingout
+package com.maritogram.fuelt.feature.workoutgeneration
 
  interface UiState {
 

@@ -12,7 +12,8 @@ dependencies {
 
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.junit.ktx)
-    implementation(project(":feature:workingout"))
+    implementation(libs.androidx.hilt.navigation.compose)
+
     implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
 
 }

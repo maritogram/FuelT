@@ -56,17 +56,3 @@ fun NavGraphBuilder.workoutGenerationScreen(
         )
     }
 }
-
-
-fun NavGraphBuilder.workoutGenerationScreenNoT(
-    parentNav: NavController
-) {
-    composable<WorkoutGenerationRoute>(
-        enterTransition = { EnterTransition.None},
-        exitTransition = { ExitTransition.None}
-    ) {
-        WorkoutGenerationScreen(
-            parentNav
-        )
-    }
-}

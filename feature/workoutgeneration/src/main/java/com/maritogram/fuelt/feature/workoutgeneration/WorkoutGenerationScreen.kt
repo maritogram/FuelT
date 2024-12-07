@@ -56,7 +56,6 @@ import com.maritogram.fuelt.core.designsystem.theme.outlineDark
 import com.maritogram.fuelt.core.designsystem.theme.outlineVariantDark
 import com.maritogram.fuelt.core.designsystem.theme.secondaryContainerDark
 import com.maritogram.fuelt.core.designsystem.theme.secondaryDark
-import com.maritogram.fuelt.feature.workingout.navigation.navigateToWorkingOutScreen
 
 @Composable
 fun WorkoutGenerationScreen(
@@ -409,7 +408,7 @@ fun TwoChoiceScreen(
                 letterSpacing = .25.sp,
                 color = onSecondaryContainerDark.copy(0.6f)
             )
-            changeNextAction({ parentNav.navigateToWorkingOutScreen(navOptions { popUpTo(parentNav.graph.startDestinationId) }) })
+            changeNextAction({ })
         } else {
             onHeightChange(140.dp)
             Text(
