@@ -42,7 +42,7 @@ class WorkingOutViewModel @Inject constructor() : ViewModel() {
 
         val generativeModel = GenerativeModel(
             modelName = "gemini-1.5-pro",
-            apiKey = "AIzaSyCKJszH7fPMkBpZkiSezepxxqyYNXgVFwo",
+            apiKey = BuildConfig.GEMINI_API,
             generationConfig = generationConfig {
                 responseMimeType = "application/json"
 

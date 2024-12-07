@@ -1,10 +1,20 @@
 plugins {
     alias(libs.plugins.fuelt.android.feature)
     alias(libs.plugins.fuelt.android.library.compose)
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
+
+secrets {
+    propertiesFileName = "secrets.properties"
+
+    defaultPropertiesFileName = "local.defaults.properties"
+}
+
 
 android {
     namespace = "com.maritogram.fuelt.feature.workoutgeneration"
+
+    buildFeatures.buildConfig = true
 }
 
 dependencies {
