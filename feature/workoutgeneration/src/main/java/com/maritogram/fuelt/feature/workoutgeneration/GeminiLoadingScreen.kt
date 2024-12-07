@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
@@ -35,10 +37,14 @@ import kotlinx.serialization.json.Json
 
 
 @Serializable
+object TESTROUTE
+
+@Serializable
 data class GeminiLoadingRoute(val timeFrame: String, val intensity: String, val bodySection: String)
 
 
 fun NavGraphBuilder.geminiLoadingScreen(
+    navController: NavController,
     navToWorkingOutScreen: () -> Unit,
 ) {
     composable<GeminiLoadingRoute>(
@@ -49,13 +55,18 @@ fun NavGraphBuilder.geminiLoadingScreen(
         },
     ) {
         val RouteObject: GeminiLoadingRoute = it.toRoute()
-
+        
+        val parentEntry = remember(it) {
+            navController.getBackStackEntry(TESTROUTE)
+        }
+        val parentViewModel = hiltViewModel<WorkingOutViewModel>(parentEntry)
 
         GeminiLoadingScreen(
             RouteObject.timeFrame,
             RouteObject.intensity,
             RouteObject.bodySection,
-            navToWorkingOutScreen = navToWorkingOutScreen
+            navToWorkingOutScreen = navToWorkingOutScreen,
+            viewModel = parentViewModel
         )
     }
 }
@@ -65,7 +76,7 @@ fun GeminiLoadingScreen(
     timeFrame: String,
     intensity: String,
     bodySection: String,
-    viewModel: WorkingOutViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
+    viewModel: WorkingOutViewModel,
     navToWorkingOutScreen: () -> Unit
 ) {
 

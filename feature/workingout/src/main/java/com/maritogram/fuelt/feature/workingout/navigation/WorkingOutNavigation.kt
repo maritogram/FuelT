@@ -9,13 +9,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
-import com.maritogram.fuelt.core.model.exercise
 import com.maritogram.fuelt.feature.workingout.NEWWorkingOutViewModel
 import com.maritogram.fuelt.feature.workingout.WorkingOutScreen
-import com.maritogram.fuelt.feature.workoutgeneration.GeminiLoadingRoute
+import com.maritogram.fuelt.feature.workoutgeneration.TESTROUTE
 import com.maritogram.fuelt.feature.workoutgeneration.WorkingOutViewModel
-import com.maritogram.fuelt.feature.workoutgeneration.navigation.WorkoutGenerationRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -30,15 +27,28 @@ fun NavController.navigateToWorkingOutScreen(navOptions: NavOptions? = null) {
 
 
 // Navhost extension method
-fun NavGraphBuilder.workingOutScreen( onExitClick: () -> Unit, navController: NavController) {
+fun NavGraphBuilder.workingOutScreen(onExitClick: () -> Unit, navController: NavController) {
     composable<WorkingOutRoute>(exitTransition = {
         slideOutOfContainer(
             animationSpec = tween(300, easing = EaseOut),
             towards = AnimatedContentTransitionScope.SlideDirection.Down
         )
-    })  {
+    }) { backstackEntry ->
 
-        WorkingOutScreen(onExitClick = onExitClick)
+        val parentEntry = remember(backstackEntry) {
+            navController.getBackStackEntry(TESTROUTE)
+        }
+        val parentViewModel = hiltViewModel<WorkingOutViewModel>(parentEntry)
+
+
+        val thisVM = hiltViewModel<NEWWorkingOutViewModel>()
+
+        WorkingOutScreen(
+            onExitClick = onExitClick,
+            exerciseBlocksvm = parentViewModel,
+            viewModel = thisVM,
+            navController = navController
+        )
     }
 }
 

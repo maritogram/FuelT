@@ -1,6 +1,7 @@
 package com.maritogram.fuelt.feature.workingout
 
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -88,6 +89,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.maritogram.fuelt.core.designsystem.theme.onSurfaceDark
 import com.maritogram.fuelt.core.designsystem.theme.onSurfaceVariantDark
 import com.maritogram.fuelt.core.designsystem.theme.onSurfaceVariantLight
@@ -109,11 +111,16 @@ import kotlin.time.Duration.Companion.seconds
 @Composable
 fun WorkingOutScreen(
     //TODO: Add list of routine objects
-    viewModel: NEWWorkingOutViewModel = hiltViewModel(),
-    exerciseBlocksvm: WorkingOutViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
+    viewModel: NEWWorkingOutViewModel,
+    exerciseBlocksvm: WorkingOutViewModel,
     onExitClick: () -> Unit,
+    navController: NavController
 ) {
     // TODO: ALERT DIALOG WHEN TRYING TO LEAVE
+
+    BackHandler {
+        navController.popBackStack(navController.graph.startDestinationId,false)
+    }
 
     val state = viewModel.state.collectAsState()
     LaunchedEffect(key1 = true, block = {

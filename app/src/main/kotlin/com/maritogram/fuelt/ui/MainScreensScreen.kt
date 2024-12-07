@@ -1,14 +1,9 @@
 package com.maritogram.fuelt.ui
 
-import android.app.Activity
-import android.graphics.drawable.shapes.Shape
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -20,9 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -32,13 +24,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
@@ -46,13 +35,10 @@ import androidx.navigation.compose.rememberNavController
 import com.maritogram.fuelt.core.designsystem.component.FueltNavigationBar
 import com.maritogram.fuelt.core.designsystem.component.FueltNavigationBarItem
 import com.maritogram.fuelt.core.designsystem.theme.primaryDark
-import com.maritogram.fuelt.core.designsystem.theme.surfaceContainerDark
-import com.maritogram.fuelt.core.designsystem.theme.surfaceDark
 import com.maritogram.fuelt.feature.home.navigation.HomeRoute
 import com.maritogram.fuelt.feature.home.navigation.homeScreen
 import com.maritogram.fuelt.feature.routines.navigation.routinesScreen
-import com.maritogram.fuelt.feature.workoutgeneration.navigation.WorkoutGenerationRoute
-import com.maritogram.fuelt.feature.workoutgeneration.navigation.navigateToGeminiOnboarding
+import com.maritogram.fuelt.feature.workoutgeneration.TESTROUTE
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -130,7 +116,7 @@ fun MainScreens(appState: FueltAppState) {
                 startDestination = HomeRoute,
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None }) {
-                homeScreen(onFabClick = { appState.navController.navigate(WorkoutGenerationRoute) })
+                homeScreen(onFabClick = { appState.navController.navigate(TESTROUTE) })
                 routinesScreen()
             }
         }

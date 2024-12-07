@@ -13,8 +13,9 @@ dependencies {
     implementation(libs.androidx.junit.ktx)
     implementation(libs.material)
     implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
-    implementation(project(":feature:workoutgeneration"))
+
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(project(":feature:workoutgeneration"))
 
 
 }

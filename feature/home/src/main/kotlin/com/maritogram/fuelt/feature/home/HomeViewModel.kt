@@ -9,13 +9,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val WorkoutRepository: IWorkoutRepository
 
 ): ViewModel() {
 
-    fun getWorkouts() : List<exercise> = WorkoutRepository.getWorkouts()
-
-    fun insertWorkout() : Unit = WorkoutRepository.insertWorkout()
 
 
 }
