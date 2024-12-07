@@ -1,10 +1,16 @@
 package com.maritogram.fuelt.feature.workoutgeneration
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.ai.client.generativeai.GenerativeModel
+import com.google.ai.client.generativeai.type.FunctionType
+import com.google.ai.client.generativeai.type.Schema
 import com.google.ai.client.generativeai.type.content
+import com.google.ai.client.generativeai.type.generationConfig
+import com.maritogram.fuelt.core.model.ExerciseData
 import com.maritogram.fuelt.core.model.exercise
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -13,11 +19,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import kotlinx.coroutines.Job
-import kotlinx.serialization.Serializable
-
 
 
 @HiltViewModel
@@ -35,15 +36,83 @@ class WorkingOutViewModel @Inject constructor() : ViewModel() {
         _uiState.asStateFlow()
 
 
-
     fun sendPrompt(
         prompt: String
     ) {
 
         val generativeModel = GenerativeModel(
             modelName = "gemini-1.5-pro",
-            apiKey = "AIzaSyCKJszH7fPMkBpZkiSezepxxqyYNXgVFwo"
+            apiKey = "AIzaSyCKJszH7fPMkBpZkiSezepxxqyYNXgVFwo",
+            generationConfig = generationConfig {
+                responseMimeType = "application/json"
+
+
+
+                responseSchema = Schema(
+                    name = "Exercise Blocks",
+                    description = "Three blocks of exercises",
+                    type = FunctionType.ARRAY,
+                    items = Schema(
+                        name = "Exercise List",
+                        description = "A list of exercises",
+                        type = FunctionType.ARRAY,
+                        items = Schema(
+                            name = "exercise",
+                            description = "An exercise",
+                            type = FunctionType.OBJECT,
+                            properties = mapOf(
+                                "name" to Schema(
+                                    name = "name",
+                                    description = "Name of the exercise",
+                                    type = FunctionType.STRING,
+                                    nullable = false
+                                ),
+                                "sets" to Schema(
+                                    name = "sets",
+                                    description = "Number of sets",
+                                    type = FunctionType.INTEGER,
+                                    nullable = false
+                                ),
+                                "reps" to Schema(
+                                    name = "reps",
+                                    description = "List of repetitions for each set",
+                                    type = FunctionType.ARRAY,
+                                    items = Schema(
+                                        name = "rep number",
+                                        description = "Rep number",
+                                        type = FunctionType.INTEGER,
+                                        nullable = false
+                                    )
+                                ),
+                                "weight" to Schema(
+                                    name = "weight",
+                                    description = "List of weights for each set",
+                                    type = FunctionType.ARRAY,
+                                    items = Schema(
+                                        name = "weight number",
+                                        description = "Weight number",
+                                        type = FunctionType.INTEGER,
+                                        nullable = false
+                                    )
+                                ),
+                                "exerciseEnum" to Schema(
+                                    name = "exercise enum",
+                                    description = "enum for exercise",
+                                    type = FunctionType.STRING,
+                                    format = "enum",
+                                    enum = ExerciseData.entries.map { it.name }
+                                )
+                            ),
+                            required = listOf("name", "sets", "reps", "weight", "exerciseEnum")
+                        )
+                    )
+                )
+
+            }
         )
+
+
+
 
         _uiState.value = UiState.Loading
 
@@ -121,9 +190,6 @@ class WorkingOutViewModel @Inject constructor() : ViewModel() {
     fun updateExerciseBlocks(updatedBlocks: ArrayList<ArrayList<exercise>>) {
         exerciseBlocks = updatedBlocks
     }
-
-
-
 
 
 }

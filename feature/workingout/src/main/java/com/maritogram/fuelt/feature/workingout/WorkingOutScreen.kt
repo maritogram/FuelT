@@ -1,5 +1,6 @@
 package com.maritogram.fuelt.feature.workingout
 
+import android.graphics.Bitmap
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
@@ -90,6 +91,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.maritogram.fuelt.core.designsystem.theme.onSurfaceDark
 import com.maritogram.fuelt.core.designsystem.theme.onSurfaceVariantDark
 import com.maritogram.fuelt.core.designsystem.theme.onSurfaceVariantLight
@@ -425,9 +428,9 @@ fun ExerciseSegmentCard(
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
     )
-    val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
 
+    val image = rememberAsyncImagePainter(exercise.exerciseEnum?.imageLink)
 
     Card(
         modifier = Modifier
@@ -441,7 +444,7 @@ fun ExerciseSegmentCard(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
-                painter = painterResource(id = R.drawable.placeholderimage),
+                painter = image,
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -490,7 +493,8 @@ fun ExerciseSegmentCard(
                     showBottomSheet = { showBottomSheet = it },
                     exercise,
                     onExerciseUpdate,
-                    onSetComplete
+                    onSetComplete,
+                    image
                 )
             }
 
@@ -509,9 +513,13 @@ fun ExerciseBottomSheet(
     showBottomSheet: (Boolean) -> Unit,
     exercise: exercise,
     onExerciseUpdate: (exercise) -> Unit,
-    onSetComplete: (exercise) -> Unit
+    onSetComplete: (exercise) -> Unit,
+    image: AsyncImagePainter
 
 ) {
+
+
+
 
     ModalBottomSheet(
         onDismissRequest = {
@@ -524,7 +532,7 @@ fun ExerciseBottomSheet(
         dragHandle = {},
     ) {
         Image(
-            painter = painterResource(id = R.drawable.placeholderimage),
+            painter = image,
             contentDescription = "",
             contentScale = ContentScale.Crop,
             modifier = Modifier

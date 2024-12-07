@@ -9,6 +9,7 @@ data class exercise(
     val completionDate: String? = null,
     val sets: Int,
     val reps: ArrayList<Int>,
+    val exerciseEnum: ExerciseData? = null,
     val weight: ArrayList<Int>,
     val completedReps: ArrayList<Boolean> = ArrayList<Boolean>(Collections.nCopies<Boolean>(reps.size, false)),
     val image: String? = null,
