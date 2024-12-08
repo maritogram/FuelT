@@ -4,22 +4,19 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.maritogram.fuelt.feature.home.HomeViewModel
 import kotlinx.serialization.Serializable
 
 
 @Serializable
 object MainScreensRoute
 
-fun NavController.NavigateToMainScreens(navOptions: NavOptions? = null) {
-    navigate(route = MainScreensRoute, navOptions)
-
-}
-
 fun NavGraphBuilder.MainScreensScreen(
-    appState: FueltAppState
+    appState: FueltAppState,
+    viewModel: HomeViewModel
 ){
     composable<MainScreensRoute> {
-        MainScreens(appState)
+        MainScreens(appState, viewModel)
     }
 
 }

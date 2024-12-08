@@ -3,6 +3,7 @@ package com.maritogram.fuelt.feature.workoutgeneration
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.ai.client.generativeai.GenerativeModel
@@ -22,7 +23,9 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class WorkingOutViewModel @Inject constructor() : ViewModel() {
+class WorkingOutViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
 
     override fun onCleared() {
@@ -140,51 +143,11 @@ class WorkingOutViewModel @Inject constructor() : ViewModel() {
     }
 
 
-    var exerciseBlocks by mutableStateOf<ArrayList<ArrayList<exercise>>>(
-        arrayListOf(
-            arrayListOf(
-                exercise(
-                    name = "Test 1",
-                    sets = 2,
-                    reps = arrayListOf(1, 2),
-                    weight = arrayListOf(1, 2)
-                ),
-                exercise(
-                    name = "Test 2",
-                    sets = 2,
-                    reps = arrayListOf(1, 2),
-                    weight = arrayListOf(1, 2)
-                )
-            ),
-            arrayListOf(
-                exercise(
-                    name = "Test 1",
-                    sets = 2,
-                    reps = arrayListOf(1, 2),
-                    weight = arrayListOf(1, 2)
-                ),
-                exercise(
-                    name = "Test 2",
-                    sets = 2,
-                    reps = arrayListOf(1, 2),
-                    weight = arrayListOf(1, 2)
-                ), exercise(
-                    name = "Test 3",
-                    sets = 2,
-                    reps = arrayListOf(1, 2),
-                    weight = arrayListOf(1, 2)
-                )
-            ),
-            arrayListOf(
-                exercise(
-                    name = "Test 1",
-                    sets = 2,
-                    reps = arrayListOf(1, 2),
-                    weight = arrayListOf(1, 2)
-                )
-            )
-        )
-    )
+    var exerciseBlocks: ArrayList<ArrayList<exercise>>
+        get() = savedStateHandle.get<ArrayList<ArrayList<exercise>>>("exerciseBlocks") ?: arrayListOf()
+        set(value) { savedStateHandle.set("exerciseBlocks", value) }
+
+
 
     // Function to update the exerciseBlocks
     fun updateExerciseBlocks(updatedBlocks: ArrayList<ArrayList<exercise>>) {

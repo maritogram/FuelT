@@ -4,8 +4,10 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navigation
+import com.maritogram.fuelt.feature.home.HomeViewModel
 import com.maritogram.fuelt.feature.workingout.navigation.navigateToWorkingOutScreen
 import com.maritogram.fuelt.feature.workingout.navigation.workingOutScreen
 import com.maritogram.fuelt.feature.workoutgeneration.TESTROUTE
@@ -21,7 +23,7 @@ import com.maritogram.fuelt.ui.MainScreensScreen
 fun FueltNavHost(
     appState: FueltAppState,
     modifier: Modifier = Modifier,
-
+    mainVM: HomeViewModel = hiltViewModel()
     ) {
 
 
@@ -31,10 +33,10 @@ fun FueltNavHost(
         startDestination = MainScreensRoute,
         modifier = modifier,
         enterTransition = { EnterTransition.None },
-        exitTransition = { ExitTransition.None }
+        exitTransition = { ExitTransition.None },
     ) {
 
-        MainScreensScreen(appState)
+        MainScreensScreen(appState, mainVM)
 
 
         navigation<TESTROUTE>(startDestination = WorkoutGenerationRoute) {
@@ -53,7 +55,8 @@ fun FueltNavHost(
                 onExitClick = {
                     navController.popBackStack(navController.graph.startDestinationId, false)
                 },
-                navController
+                navController,
+                mainVM
             )
 
         }

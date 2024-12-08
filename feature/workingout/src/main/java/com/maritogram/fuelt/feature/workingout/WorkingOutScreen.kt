@@ -1,7 +1,5 @@
 package com.maritogram.fuelt.feature.workingout
 
-import android.graphics.Bitmap
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -65,7 +63,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -81,7 +78,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -89,7 +85,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
@@ -104,6 +99,8 @@ import com.maritogram.fuelt.core.designsystem.theme.surfaceContainerHighestDark
 import com.maritogram.fuelt.core.designsystem.theme.tertiaryContainerDark
 import com.maritogram.fuelt.core.designsystem.theme.tertiaryDark
 import com.maritogram.fuelt.core.model.exercise
+import com.maritogram.fuelt.core.model.workout
+import com.maritogram.fuelt.feature.home.HomeViewModel
 import com.maritogram.fuelt.feature.workoutgeneration.WorkingOutViewModel
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -117,7 +114,8 @@ fun WorkingOutScreen(
     viewModel: NEWWorkingOutViewModel,
     exerciseBlocksvm: WorkingOutViewModel,
     onExitClick: () -> Unit,
-    navController: NavController
+    navController: NavController,
+    homeViewModel: HomeViewModel
 ) {
     // TODO: ALERT DIALOG WHEN TRYING TO LEAVE
 
@@ -138,7 +136,12 @@ fun WorkingOutScreen(
             DoubleFAB(
                 viewModel::stopTimer,
                 viewModel::startTimer,
-                {},
+                {
+                    //Update home view model
+                    homeViewModel.addCompletedWorkout(workout(duration = viewModel.state.value.currentTime, AIgenerated = true))
+
+                    navController.popBackStack(navController.graph.startDestinationId,false)
+                },
                 state.value.isTimerGoing
             )
         },

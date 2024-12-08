@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.maritogram.fuelt.feature.home.HomeScreen
+import com.maritogram.fuelt.feature.home.HomeViewModel
 import kotlinx.serialization.Serializable
 
 
@@ -17,11 +18,16 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) =
 
 fun NavGraphBuilder.homeScreen(
     onFabClick: () -> Unit,
+    homeViewModel: HomeViewModel
 ) {
     composable<HomeRoute> {
         HomeScreen(
-            onFabClick
+            onFabClick,
+            homeViewModel,
         )
+
+
+        2
     }
 }
 

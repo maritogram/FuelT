@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.maritogram.fuelt.feature.home.HomeViewModel
 import com.maritogram.fuelt.feature.workingout.NEWWorkingOutViewModel
 import com.maritogram.fuelt.feature.workingout.WorkingOutScreen
 import com.maritogram.fuelt.feature.workoutgeneration.TESTROUTE
@@ -27,7 +28,11 @@ fun NavController.navigateToWorkingOutScreen(navOptions: NavOptions? = null) {
 
 
 // Navhost extension method
-fun NavGraphBuilder.workingOutScreen(onExitClick: () -> Unit, navController: NavController) {
+fun NavGraphBuilder.workingOutScreen(
+    onExitClick: () -> Unit,
+    navController: NavController,
+    vm: HomeViewModel
+) {
     composable<WorkingOutRoute>(exitTransition = {
         slideOutOfContainer(
             animationSpec = tween(300, easing = EaseOut),
@@ -47,7 +52,8 @@ fun NavGraphBuilder.workingOutScreen(onExitClick: () -> Unit, navController: Nav
             onExitClick = onExitClick,
             exerciseBlocksvm = parentViewModel,
             viewModel = thisVM,
-            navController = navController
+            navController = navController,
+            homeViewModel = vm
         )
     }
 }
