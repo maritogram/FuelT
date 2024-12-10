@@ -91,7 +91,8 @@ fun GeminiLoadingScreen(
                     "  - name (string)\n" +
                     "  - sets (integer)\n" +
                     "  - reps (an array of integers with the same number of elements as 'sets')\n" +
-                    "  - weight (an array of integers with the same number of elements as 'sets')"
+                    "  - weight (an array of integers with the same number of elements as 'sets')" +
+                    "  - only if the exercise uses body-weight (like burpees, pushups, etc.), the weight array is going to be filled with 0s "
         )
     }
 
