@@ -1,5 +1,6 @@
 package com.maritogram.fuelt.ui
 
+import android.icu.util.Calendar
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -35,12 +36,29 @@ import com.maritogram.fuelt.core.designsystem.theme.outlineVariantDark
 import com.maritogram.fuelt.core.designsystem.theme.surfaceContainerDark
 import com.maritogram.fuelt.core.model.workout
 import kotlinx.datetime.DayOfWeek
+import java.time.temporal.WeekFields
 
 
 @Composable
 fun WeeklyActivity(
-    workouts: List<workout>
+    workouts: List<workout>,
+    dayGoals: Int,
 ) {
+
+
+    var achievedGoalNumber = 0
+    var countedDay = ArrayList<DayOfWeek>()
+
+    workouts.forEach {
+        if (!countedDay.contains(it.completionDate.dayOfWeek) && achievedGoalNumber < dayGoals){
+            achievedGoalNumber++
+            countedDay.add(it.completionDate.dayOfWeek)
+        }
+
+    }
+
+
+
     OutlinedCard(
         border = BorderStroke(1.dp, outlineVariantDark),
         colors = CardDefaults.cardColors(
@@ -69,7 +87,7 @@ fun WeeklyActivity(
                 ) {
                     // TODO: Make this change based on weekly activity duh.
                     Text(
-                        "0/3",
+                        "${achievedGoalNumber}/${dayGoals}",
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp,
                         color = onPrimaryContainerDark

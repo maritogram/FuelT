@@ -78,7 +78,7 @@ internal fun HomeScreen(
 
             Spacer(modifier = Modifier.height(13.dp))
 
-            WeeklyActivity(viewModel.getWorkoutsThisWeek())
+            WeeklyActivity(viewModel.getWorkoutsThisWeek(), viewModel.weeklyGoal.value)
 
             Spacer(modifier = Modifier.height(18.dp))
 

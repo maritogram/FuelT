@@ -163,7 +163,7 @@ fun MainScreens(appState: FueltAppState, homeViewModel: HomeViewModel) {
                                         value = it.toInt()
                                     }
                                 },
-                                label = { Text("Enter new value") }
+                                label = { Text("Enter your new weekly goal.") }
                             )
 
                             Spacer(modifier = Modifier.height(16.dp))
@@ -172,10 +172,16 @@ fun MainScreens(appState: FueltAppState, homeViewModel: HomeViewModel) {
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceAround
                             ) {
-                                Button(onClick = { value }) {
+                                Button(onClick = {
+
+                                        homeViewModel.weeklyGoal.intValue = value
+                                        showDialog = false
+
+
+                                }) {
                                     Text("Save")
                                 }
-                                Button(onClick = {}) {
+                                Button(onClick = {showDialog =false}) {
                                     Text("Cancel")
                                 }
                             }
